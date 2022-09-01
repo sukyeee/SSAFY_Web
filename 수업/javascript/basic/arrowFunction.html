@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // normal function
+        // function print( a ) {
+        //     console.log( a );
+        // }
+
+        // print( 0 );
+        // print( "normal" );
+
+        // arrow 1
+        var print = ( a ) => console.log(a);
+        
+        // arrow 2
+        var print = ( a ) => {
+            console.log( a ) ;
+            console.log( a ) ;
+        }
+
+        // arrow 3
+        var print = a => console.log(a);
+
+
+        print ( 1 );
+        print ( "arrow 1" );
+
+        // arrow 4
+        var print = () => console.log("arrow function ");
+        print();
+
+        // arrow 5
+        var add = ( a, b ) => a + b;
+        console.log( add(4, 7));
+
+        // this !!!
+        const obj = {
+            num : 5,
+            // print : function() {
+            //     console.log(this.num);
+            // }
+
+            print: () => { // arrow function 에서 this는 arrowfunction 객체의 부모 객체를 찾아서 그 녀석을 출력한다. 우리가 생각하는 것처럼 안에있는 num이 아님!
+                console.log( this.num );
+                console.log( this );
+            }
+        }
+        console.log(obj.num);
+        obj.print();
+
+    </script>
+</body>
+</html>

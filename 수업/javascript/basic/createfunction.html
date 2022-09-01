@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // normal
+        function add_1(a, b) {
+            return a + b;
+        }
+
+        // variable ( annonymmous )
+        var add_2 = function(a, b){
+            return a + b;
+        }
+
+        // new
+        var add_3 = new Function( 'a', 'b', 'return a + b'); // 잘 사용되지 않는 함수
+
+        console.log( add_1(10, 20) );
+        console.log( add_2(10, 20) );
+        console.log( add_3(10, 20) );
+
+        // function parameter, return type  variable 할당 <= first class object  !! 잡 인터뷰 할때도 많이 나옴! 알아두기 
+        
+        // as parameter
+        function add_4( a, b, func ){
+            let ret = func( a, b );
+            return ret;
+        }
+
+        console.log( add_4(20, 40, add_2) );
+
+
+        // as return type
+        function myFunc() {
+            const add_5 = function(a, b){
+                return a + b;
+            }
+
+            return add_5;
+        }
+
+        const add_param = myFunc();
+        // console.log(add_param)
+        console.log( add_param( 30, 100 ));
+        // 이런게 다 가능하기 때문에 first class object
+
+        
+    </script>
+</body>
+</html>
