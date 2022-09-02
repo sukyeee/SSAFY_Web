@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #wrapper{
+        width: 600px;
+    }
+    table, th, td{
+        border: 1px solid lightseagreen;
+        border-collapse: collapse;
+        text-align: center;
+        padding: 10px;
+    }
+    table{
+        width: 100%;
+    }
+</style>
+<body>
+    <div id="container">
+        <div id="wrapper">
+            <h4>아래의 가격표를 확인해 주세요.</h4>
+            <table>
+                <tr>
+                    <th>번호</th><th>이름</th><th>가격</th>
+                </tr>
+                <tr class="sale">
+                    <td>1</td><td>족발</td><td class="price" data-price="10000" discount="1000">10000</td>
+                </tr>
+                <tr class="sale" data-fish="광어">
+                    <td>2</td><td>회</td><td class="price soldout" data-price="20000" discount="5000">20000</td>
+                </tr>
+                <tr id="hobulho">
+                    <td>3</td><td>홍어</td><td class="price" data-price="30000" discount="10000">30000</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // // getElementById()
+        // const container = document.getElementById("container");
+        // console.log( container.innerHTML );
+
+        // // getElementByTagName()
+        // const table = document.getElementsByTagName("table");
+        // console.log( table[0].innerHTML );
+        
+        // const tr = document.getElementsByTagName("tr"); // array X, HTMLCollection
+        // tr.forEach(el => {
+        //     console.log(el)
+        // });
+
+        // querySelector 1개
+        const container = document.querySelector("#container");
+        console.log( container.innerHTML );
+
+        const tr = document.querySelectorAll("tr"); // 복수일 때 forEach를 사용할 수 있다.
+        tr.forEach( el => console.log(el.innerHTML));
+
+        document.querySelectorAll("tr").forEach( el => console.log(el.innerHTML));
+
+    </script>
+</body>
+</html>

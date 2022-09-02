@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container {
+            border: 1px solid lightcoral;
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h4 id="title">제목입니다.</h4>
+        <p id="content">내용입니다.</p>
+    </div>
+    <hr>
+    <button onclick = "fun1();" id="btn1">제목 변경</button>
+    <button id="btn2">내용 변경</button>
+    <button id="btn3">테두리 변경</button>
+
+    <script>
+        // event listener, event handler
+        // event target ( src ) : event 를 발생시키는 항목
+        // event 종류
+        // event handler ( event 처리 )
+
+        // #1 inline script
+        function fun1() {
+            document.querySelector("#title").innerText = "제목이 변경되었습니다.";
+        }
+
+        // #2 event target .on[Event] = function(){}
+        document.querySelector("#btn2").onclick = function() {
+            document.querySelector("#content").innerText = "내용이 변경되었습니다.";
+        }
+
+        // #3 event target.addEventListener
+        document.querySelector("#btn3").addEventListener("mouseover", function() {
+            document.querySelector("#container").style.border =  "1px solid blue"; // 되도록이면 css 관련 코드는 js로 처리하지 않는다. 비추!!
+         })
+
+        // #3번째 방법을 많이 사용한다!
+
+
+      
+
+
+    </script>
+</body>
+</html>

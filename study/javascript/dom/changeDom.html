@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <style>
+        #wrapper{
+            width: 600px;
+        }
+        table, th, td{
+            border: 1px solid lightseagreen;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 10px;
+        }
+        table{
+            width: 100%;
+        }
+
+        .price {
+            color: red;
+        }
+    </style> 
+    <body>
+        <div id="container">
+            <div id="wrapper">
+                <h4 id="title">아래의 가격표를 확인해 주세요.</h4>
+                <table>
+                    <tbody id = "tbody" >
+                    <tr>
+                        <th>번호</th><th>이름</th><th>가격</th>
+                    </tr>
+                    <tr class="sale">
+                        <td>1</td><td>족발</td><td class="price" data-price="10000" discount="1000">10000</td>
+                    </tr>
+                    <tr class="sale" data-fish="광어">
+                        <td>2</td><td>회</td><td class="price soldout" data-price="20000" discount="5000">20000</td>
+                    </tr>
+                    <tr id="hobulho">
+                        <td>3</td><td>홍어</td><td class="price" data-price="30000" discount="10000">30000</td>
+                    </tr>
+                  </tbody>
+                    <tr>
+                        <td colspan="3" id="boina"><span style="display:none;">보이나?</span><span>맛있게 드세요.</span></td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
+        <button id="btnChangeDom">change Dom</button>
+ 
+        <script>
+            window.onload = function() {
+                document.querySelector("#btnChangeDom").onclick = function() {
+                    changeDom();
+                }
+            }
+
+            function changeDom() {
+                
+                // innerText
+                document.querySelector("#title").innerText = "가격표가 바뀌었습니다.!!!"
+
+                // innerHTML
+                document.querySelector("#hobulho").innerHTML = 
+                ` <td>3</td><td>과메기</td><td class="price" data-price="25000" discount="10000">1000</td> `
+
+                // queryselector + innerHTML
+                document.querySelector("#hobulho .price").innerHTML = `<strong>35000</strong>`;
+
+                // innerText, textContent
+                let boina = document.querySelector("#boina");
+                console.log(boina.innerText);
+                console.log(boina.textContent);
+
+                // color - style 
+                document.querySelectorAll(".price").forEach( el => el.style.color = "red" );
+
+                // attribute
+                document.querySelectorAll(".price").forEach( el => {
+                    let price = el.getAttribute("data-price");
+                    // let price = el.getAttribute["data-price"].value;
+                   
+                    // let discount = el.getAttribute("discount");
+                    let discount = el.attributes.discount.value;
+                    console.log(el.innerText)
+                    el.innerText = parseInt(price) - parseInt(discount); // string - string "123" + "23" "12323"
+                    
+                })
+
+
+                // closest() : element시작해서 부모로가면서 매칭되는 첫번째 것!
+                document.querySelectorAll(".price.soldout").forEach( el => el.closest("tr").style.opacity = "0.5" );
+
+                // remove()
+                let lastTr = document.querySelector("#tbody tr:last-child");
+                console.log(lastTr)
+                lastTr.remove();
+                {
+                // append() 
+                let tbody = document.querySelector("#tbody");
+                let tr = document.createElement("tr"); // 새로운 항목
+                tr.innerHTML = 
+                `
+                <tr> 
+                <td>4</td><td>삼겹살</td><td class="price" data-price="25000" discount="10000">25000</td> 
+                </tr>
+                `
+                
+                tbody.append( tr ); // 맨 뒤에 추가
+
+                }
+            //     {
+            //     // prepend()
+            //     let tbody = document.querySelector("#tbody");
+            //     let tr = document.createElement("tr"); // 새로운 항목
+            //     tr.innerHTML = 
+            //     `  
+            //      <tr> 
+            //         <td>0</td><td>순대국</td><td class="price" data-price="10000" discount="1000">10000</td> 
+            //     </tr>`;
+            //    tbody.prepend(tr);
+            //     }
+                {
+                // insertBefore()
+                let firstTdRow = document.querySelector("#tbody tr:nth-child(2)"); // 새로운 항목
+                let tr = document.createElement("tr"); // 새로운 항목
+                tr.innerHTML = 
+                    `  
+                    <tr> 
+                        <td>0</td><td>순대국</td><td class="price" data-price="10000" discount="1000">10000</td> 
+                    </tr>`;
+               tbody.insertBefore(tr, firstTdRow);
+                }
+                // {
+                //     // Array
+                //     let menu = [{no:"11", name:"막걸리", price:"3000"}, {no:"12", name:"소주", price:"3000"}, {no:"13", name:"맥주", price:"3000"}];
+                //     let tbody = document.querySelector("#tbody");
+                //     menu.forEach( el => {
+                //         let tr = document.createElement("tr");
+                //         tr.innerHTML = 
+                //         `<tr>
+                //             <td>${el.no}</td><td>${el.name}</td><td class="price" data-price=${el.price} discount="1000">${el.price}</td> 
+                //         </tr>`;
+                //         tbody.append( tr );
+                //     })
+
+                // }
+                {
+                    // JSON
+                    let json = `[{"no":"11","name":"막걸리","price":"3000"},{"no":"12","name":"소주","price":"3000"},{"no":"13","name":"맥주","price":"3000"}]`;
+                    let menu = JSON.parse( json );
+                    console.log(menu)
+                    let tbody = document.querySelector("#tbody");
+                    menu.forEach( el => {
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = 
+                        `<tr>
+                            <td>${el.no}</td><td>${el.name}</td><td class="price" data-price=${el.price} discount="1000">${el.price}</td> 
+                        </tr>`;
+                        tbody.append( tr );
+                    })
+
+                }
+
+            }
+        </script>
+</body>
+</html>

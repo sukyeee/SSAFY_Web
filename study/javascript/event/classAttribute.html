@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #shape {
+            width: 400px;
+            height: 400px;
+            border: 1px solid lightcoral;
+        }
+        .circle {
+            border-radius: 50%;
+        }
+        
+        .rect {
+            border-radius: 0%;
+        }
+
+        .rounded-rect {
+            border-radius: 15%;
+        }
+    </style>
+</head>
+<body>
+    <div id="shape"></div>
+    <hr>
+    <!-- 사용자 정의 는 '-' 를 넣는게 좋다  -->
+    <button id="btnCircle" data-click-count="0" >Circle</button>
+    <button id="btnRect" data-click-count="0" >Rect</button>
+    <button id="btnRoundedRect" data-click-count="0" >Rounded Rect</button>
+    <hr>
+    <button id="btnClickCountInfo">click count info</button>
+    <p id = "pCountInfo"> 내용을 보려면 버튼을 클릭하세요.</p>
+    <script>
+        // 바로 수행
+        // window 가 dom 준비하고 나면 수행
+
+        //전역변수
+        var shape;
+        let circleCnt = 0;
+        window.onload = function() {
+            shape = document.querySelector("#shape");
+
+            // circle
+            //     document.querySelector("#btnCircle").addEventListener("click", function() {
+            //     shape.classList.remove("rect");
+            //     shape.classList.remove("rounded-rect");
+            //     shape.classList.add("circle");
+            //     this.setAttribute("data-click-count", parseInt(this.getAttribute("data-click-count")) + 1);
+            // })
+
+
+            // circle arrow function
+            document.querySelector("#btnCircle").addEventListener("click", (e) => {
+                shape.classList.remove("rect");
+                shape.classList.remove("rounded-rect");
+                shape.classList.add("circle");
+                e.target.setAttribute("data-click-count", parseInt(e.target.getAttribute("data-click-count")) + 1);
+            })
+
+
+              // Rect
+            //   document.querySelector("#btnRect").addEventListener("click", function() {
+            //     shape.classList.remove("circle");
+            //     shape.classList.remove("rounded-rect");
+            //     shape.classList.add("rect");
+            //     this.setAttribute("data-click-count", parseInt(this.getAttribute("data-click-count")) + 1);
+
+            // })
+
+             // Rect arrow function
+             document.querySelector("#btnRect").addEventListener("click", (e) =>  {
+                shape.classList.remove("circle");
+                shape.classList.remove("rounded-rect");
+                shape.classList.add("rect");
+                e.target.setAttribute("data-click-count", parseInt(e.target.getAttribute("data-click-count")) + 1);
+
+            })
+
+              // RoundedRect
+            //   document.querySelector("#btnRoundedRect").addEventListener("click", function() {
+            //     shape.classList.remove("rect");
+            //     shape.classList.remove("circle");
+            //     shape.classList.add("rounded-rect");
+            //     this.setAttribute("data-click-count", parseInt(this.getAttribute("data-click-count")) + 1);
+
+            // });
+
+            // RoundRect arrow function
+            document.querySelector("#btnRoundedRect").addEventListener("click", (e) => {
+                shape.classList.remove("rect");
+                shape.classList.remove("circle");
+                shape.classList.add("rounded-rect");
+                e.target.setAttribute("data-click-count", parseInt(e.target.getAttribute("data-click-count")) + 1);
+
+            });
+               
+                document.querySelector("#btnClickCountInfo").addEventListener("click", function() {
+                 let click1 = document.querySelector("#btnCircle").getAttribute("data-click-count");
+                 let click2 = document.querySelector("#btnRect").getAttribute("data-click-count");
+                 let click3 = document.querySelector("#btnRoundedRect").getAttribute("data-click-count");
+                 document.querySelector("#pCountInfo").innerHTML = `클릭한 횟수는 원 (${click1}) 사각 (${click2}) 라운드 사각 (${click3}) 입니다.`;
+                 
+            })
+
+        }
+
+
+    </script>
+</body>
+</html>

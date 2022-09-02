@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // num
+        var num = 10;
+
+        console.log( num );
+
+        changeNum( num ); // 값 복사 
+
+        console.log( num );
+
+        function changeNum(num){
+            num = 20;
+        }
+
+        // String
+        var str = "SSAFY";
+
+        console.log(str);
+
+        changeStr( str );
+
+        console.log(str);
+
+        function changeStr( str ) {
+            str = "Hello";
+        }
+
+        // Object
+        var car = { name: "현대" };
+
+        console.log( car );
+
+        changeObj( car );
+
+        console.log( car );
+
+        changeName( car );
+
+        console.log( car );
+
+        function changeObj( obj ){
+            obj = { name: "볼보" }; // var car와 아예 다른 녀석
+        }
+
+        function changeName( obj ){
+            obj.name = "기아";
+        }
+
+        // Array
+        var nums = [1, 2, 3, 4 ];
+
+        console.log( nums );
+
+        changeFirst( nums );
+
+        console.log( nums );
+
+        function changeFirst( array ){
+            array[0] = 9;
+        }
+
+
+    </script>
+
+
+</body>
+</html>
