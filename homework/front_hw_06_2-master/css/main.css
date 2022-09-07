@@ -1,0 +1,138 @@
+.main-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+
+}
+.navbar {
+    height: 10vh;
+    width:100%;
+}
+.btn-outline-success{
+    width:150px;
+    margin-right: 5px;
+}
+
+.content-user-list h1{
+   margin:auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top:30px;
+}
+.content-user-list-ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    margin:10px;
+    padding:20px;
+    border-radius: 10px;
+    
+}
+
+#navbarNav{
+    width:100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-login{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin:auto;
+    width:100vw;
+    height: 100vh;
+}
+.header-nav, .login-page h1 {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.header-nav a{
+    text-decoration: none;
+    color:#53e3a6;
+}
+footer {
+    width:100%;
+}
+.footer-list{
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    width:15wh;
+    height: 10vh;
+    background-color: rgb(63, 63, 63);
+    color:gainsboro;
+}
+.footer-list a{
+   color:whitesmoke;
+   text-decoration: none;
+   justify-content: center;
+   align-items: center;
+   padding:10px;
+}
+
+.form {
+    position: relative;
+    z-index: 1;
+    background: #ffffff;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    
+  }
+  
+  .form input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  
+  .form button {
+    margin: 0 0 15px;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #53e3a6;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+  }
+  .form button:hover,
+  .form button:active,
+  .form button:focus {
+    background: #50a3a2;
+  }
+  .form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+  }
+  .form .message a {
+    color: green;
+    text-decoration: none;
+  }
+  
+  

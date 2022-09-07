@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css" />
+</head>
+<style>
+   
+
+</style>
+<body>
+  <div class="container-fluid">
+  
+    <nav class="navbar navbar-light bg-light">
+      
+      <div id="login-modal" style="position: relative;">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">아이디</label>
+            <input type="text" class="form-control" id="exampleInputId1" aria-describedby="idHelp" placeholder="ssafy1">
+            <div id="idHelp" class="form-text">아이디는 "ssafy1" 입니다.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="ssafy2">
+            <div id="passwordHelp" class="form-text">패스워드는 "ssafy2" 입니다.</div>
+          </div>
+          <button type="submit" class="btn btn-primary" onclick="login(event);">로그인</button>
+        </form>
+        <button class="btn btn-primary" style="position: absolute; bottom: 26px; right: 10px;"onclick="closeModal();">닫기</button>
+      </div>
+
+      <div id="nav_menu">
+        <button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="login-btn" onclick="showModal();">login</button>
+        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="logout-btn" onclick="logout()">logout</button>
+        <button class="btn btn-sm btn-outline-secondary register-btn" type="button" ><a href="register.html">register</a></button>
+      </div>
+    </nav>
+
+    <header>
+        <div class="header-main">
+
+            <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpBikJfmp4hdfGgW8rF5vhgNYDgv1KE6X1_w&usqp=CAU" alt="" style="width: 95%; height: 400px; margin-top: 2rem; margin-left: 2.5%"> -->
+            <img class="header-main-img" src="img/house.jpeg" alt="">
+            <div class="header-main-img-black"> </div>
+            <div class="main-title">
+              <div class="main-title-content">
+                <p>구해줘 홈즈</p>
+                <p>우리들을 위한 집</p>  
+              </div>
+            </div>
+          </img>
+            
+            <div class="header-menu">
+              <!-- <img class = "logo" style="width: 20rem; padding-left: 3rem" src="http://www.newsworker.co.kr/news/photo/202204/153752_169267_517.png" class="card-img-top" alt="..."> -->
+            
+              <div class="header-menu-right">
+                <a href="#">오늘의 뉴스</a>
+                <a href="#">공지사항</a>
+              </div>
+            </div>
+
+        </div>
+       
+    </header>
+    
+    <main>
+        <div class="main-top">
+          
+            
+         </div>
+        
+        <div class="main-bottom">
+          <div class="row col-md-12 justify-content-center mb-2">
+            <div class="form-group col-md-2">
+              <select class="form-select  main-button" id="sido">
+                <option value="">시도선택</option>
+                
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <select class="form-select  main-button" id="gugun">
+                <option value="">구군선택</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <select class="form-select  main-button" id="dong">
+                <option value="">동선택</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      
+    </main>
+
+    <footer>
+      <!-- <div class="section-bottom">
+        <div class="footer-left">
+          <img src="data:image/jpeg;base64,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" alt=""> 
+      
+            <div class="footer-left-content">
+              <h5>지혜롭게 내집 마련하기</h4>
+              <hr>
+              <div>가용자금 확인 및 대출 계획</div>
+              <div>집 종류 및 지역 선택</div>
+              <div>정보 수집 & 시세파악</div>
+              <div>부동산 방문 & 집구경</div>
+              <div>계약 및 잔금 치르기</div>
+              <div>소유권 이전 등기</div>
+              <div>인테리어 공사</div>
+          </div>
+
+        </div>
+
+         
+        <div class="footer-right">
+          <h5>부동산 뉴스</h5>
+          <hr>
+          <div>서울 아파트, 매매·전세 다른 양상..상승..아시아경제</div>
+          <div>
+              <ul>
+                  <li>서울 입주 2년차 아파트 전셋값 1억400만원 올라 한겨레</li>
+                  <li>12·16發 거래한파...매수자가 사라졌다 아시아경제</li>
+                  <li>재건축 대안 뜨는 수직증축 리모델링... 추진 속.. 동아일보</li>
+                  <li>고가기준 9억, 서울 아파트 중간값 됐다 동아일보</li>
+              </ul>
+          </div>
+        
+      </div>
+    </div> -->
+
+    <div class="footer-card">
+      <img src="img/house1.jpeg">
+        <div class="footer-card-dark"></div>
+        <p class="footer-card-title">지혜롭게 내집 마련하기</p>
+        <div class="footer-card-content">
+          <p>#대출</p>
+          <p>#부동산</p>
+          <p>#집구경</p>
+        </div>
+      </img>
+    </div>
+    <div class="footer-card">
+      <img src="img/house2.jpg">
+    </div>
+    <div class="footer-card">
+      <img src="img/house3.jpg">    
+      <div class="footer-card-dark"></div>
+        <p class="footer-card-title">부동산 뉴스</p>
+        <div class="footer-card-content">
+          <p>#서울아파트매매</p>
+          <p>#거래한파</p>
+          <p>#리모델링</p>
+        </div>
+      </img>  
+    </div>
+
+  </footer>
+
+  </div>
+  <!-- container -->
+  </body>
+
+  <script>
+     function showModal() {
+      var element = document.querySelector("#login-modal");
+      element.setAttribute("style", "display: inline-block");
+    }
+
+    function closeModal() {
+      var element = document.querySelector("#login-modal");
+      element.setAttribute("style", "display: none");
+      console.log("closed");
+    }
+
+    function login(e) {
+      e.preventDefault();
+
+      var inputId = document.querySelector("#exampleInputId1").value;
+      var inputPassword = document.querySelector("#exampleInputPassword1").value;
+
+      if (inputId !== "ssafy1") {
+        alert("아이디가 잘못되었습니다. 아이디는 ssafy1 입니다.");
+        return;
+      }
+
+      if (inputPassword !== "ssafy2") {
+        alert("비밀번호가 잘못되었습니다. 비밀번호는 ssafy2 입니다.");
+        return;
+      }
+
+      alert("정상적으로 로그인 되었습니다.");
+
+      closeModal();
+
+      var loginBtn = document.querySelector("#login-btn");
+      var logoutBtn = document.querySelector("#logout-btn");
+
+      loginBtn.classList.remove("show-btn");
+      loginBtn.classList.add("hide-btn");
+
+      logoutBtn.classList.remove("hide-btn");
+      logoutBtn.classList.add("show-btn");
+    }
+
+    function logout() {
+
+      alert("정상적으로 로그아웃 되었습니다.");
+
+      var loginBtn = document.querySelector("#login-btn");
+      var logoutBtn = document.querySelector("#logout-btn");
+
+      loginBtn.classList.remove("hide-btn");
+      loginBtn.classList.add("show-btn");
+
+      logoutBtn.classList.remove("show-btn");
+      logoutBtn.classList.add("hide-btn");
+    }
+  </script>
+</html>

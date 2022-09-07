@@ -7,6 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-    dd
+
+    <script>
+
+        
+        // fetch(`${ "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?LAWD_CD=11110&DEAL_YMD=201512&serviceKey=l8mq0OCEjEDRDqtt8j2xS7kwK2OYgw6453AFkmdVkDF2YvF6LmHEEWCjZ2FnOrcnmipoquf7wccg21CEGTWVvA%3D%3D&LAWD_CD=11110&DEAL_YMD=201512"}`)
+        //   .then((response) => response.text())
+        //   .then((data) => console.log(data));
+    
+    const getItems = async () => {
+    const url = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?LAWD_CD=11110&DEAL_YMD=201512&serviceKey=l8mq0OCEjEDRDqtt8j2xS7kwK2OYgw6453AFkmdVkDF2YvF6LmHEEWCjZ2FnOrcnmipoquf7wccg21CEGTWVvA%3D%3D&LAWD_CD=11110&DEAL_YMD=201512";
+    const response = await fetch(url)
+                               .then((response) => response.text())
+                                .then((data) => console.log(data));
+
+        return response;
+    }
+
+    getItems()
+
+        
+    </script>
 </body>
 </html>
