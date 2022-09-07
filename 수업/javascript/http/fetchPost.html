@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h3>보내는 데이터</h3>
+        <form id="sendForm">
+            <label for="userId">userId</label><input type="text" id="userId" name="userId" value="ssafy">
+            <label for="userPwd">userPwd</label><input type="text" id="userPwd" name="userPwd" value="1234">
+        </form>
+    </div>
+    <hr>
+    <button id="btnPost">보내기</button>
+
+    <script>
+        
+        window.onload = function() {
+            document.querySelector("#btnPost").onclick = function() {
+                sendData();
+            }
+        }
+
+        // Promise Way
+        // function sendData() {
+
+        //     let userId = document.querySelector("#userId").value;
+        //     let userPwd = document.querySelector("#userPwd").value;
+        //     let urlParams = new URLSearchParams({
+        //         userId: userId,
+        //         userPwd: userPwd,
+        //     });
+
+        //     // options
+        //     let fetchOptions = {
+        //         method: "POST",
+        //         body: urlParams,
+        //     }
+
+        //     fetch("http://localhost:8080/WebBasic/SimplePostTestServlet", fetchOptions)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if (data.result == "success") alert("전송 성공!");
+        //             else if (data.result == "fail") alert("전송 실패!");
+        //         });
+        // }
+
+        // Promise + async + await Way
+
+        async function sendData() {
+            // post로 전송할 파라미터 준비
+        let userId = document.querySelector("#userId").value;
+        let userPwd = document.querySelector("#userPwd").value;
+        let urlParams = new URLSearchParams({
+            userId: userId,
+            userPwd: userPwd,
+        });
+
+        // options
+        let fetchOptions = {
+            method: "POST",
+            body: urlParams,
+        }
+
+        let response = await fetch("http://localhost:8080/WebBasic/SimplePostTestServlet", fetchOptions);
+        let data = await response.json();
+
+        if (data.result == "success") alert("전송 성공!");
+        else if (data.result == "fail") alert("전송 실패!");
+       
+        }
+    </script>
+</body>
+</html>

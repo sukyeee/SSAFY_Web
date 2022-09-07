@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>마커 생성하기</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="map" style="width:100%;height:800px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=54ab79b2f09a0ef4ca2e0b896ef72a90"></script>
+<script>
+var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+var mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+
+const places = [
+            { name: "부산시 남구", lat: 35.1365226602861, lng: 129.084238267311 },
+            { name: "부산시 해운대구", lat: 35.1630666685425, lng: 129.16359608401 },
+            { name: "부산시 강서구", lat: 35.2121944923157, lng: 128.980561688903 },
+         ];
+
+    // 세 개의 마커를 화면 중심에 어떻게 표시 ??
+    // => LatLngBounds 객체
+
+    var bounds = new kakao.maps.LatLngBounds();
+
+    // places 만큼 마커 생성 / 표시
+    places.forEach(  (el) => {
+
+    // 마커가 표시될 위치입니다 
+    var markerPosition  = new kakao.maps.LatLng( el.lat, el.lng ); 
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: markerPosition,
+    });
+
+    var infowindow = new kakao.maps.InfoWindow({
+        content: `<div class="card" style="width: 18rem;">
+                <img src="lee.png"  class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${el.name}</h5>
+                    <p class="card-text">lat : ${el.lat}  lng : ${el.lng} </p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+                </div>`,
+    removable : true,
+    });
+
+    kakao.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map, marker);
+    });
+
+    // bounds 에 집어넣기 : 경계면을 확장시킨다
+    bounds.extend( markerPosition );
+
+    })
+
+    map.setBounds(bounds);
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

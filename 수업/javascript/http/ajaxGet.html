@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <style>
+        span {
+            padding: 10px;
+        }
+    </style>
+<body>
+    
+    <div id="container">
+        <h3>받은 데이터</h3>
+        <div id="receivedData"></div>
+    </div>
+
+    <hr>
+    <button id="btnGet">가져오기</button>
+ 
+    <script>
+        // ajax 처리 객체 - XMLHttpRequest : 그 당시 데이터 표현/교환하는 방법이 XML으로 대체될 것으로 예상되서 XML을 갖다붙힘
+        // httpRequest.readyState
+        // 0    UNSENT    Client has been created. open() not called yet.
+        // 1    OPENED    open() has been called.
+        // 2    HEADERS_RECEIVED    send() has been called, and headers and status are available.
+        // 3    LOADING    Downloading; responseText holds partial data.
+        // 4    DONE    The operation is complete.
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = ajaxCallback; // httpRequest 의 처리하는 일련의 과정에서 상태가 바뀔 때 마다 호출되는 callback 지정
+
+        window.onload = function() {
+            document.querySelector("#btnGet").onclick = function() {
+                getJson();
+            }
+        }
+
+        function getJson() {
+            // 백엔드로 보낼 파라미터 세팅
+            // 백엔드 URL 로 request ( GET / POST )
+            // response - callback ??
+            // callback 에서 UI 처리 
+            
+            var url = new URL("http://localhost:8080/WebBasic/SimpleJsonListServlet"); // http://localhost:8080/프로젝트이름/servlet주소
+            url.searchParams.append("userId", "ssafy");
+            url.searchParams.append("msg", "안녕하세요?");
+            
+            httpRequest.open(
+                "GET",
+                url,
+                true // async 여부
+            );
+            httpRequest.send();
+        }
+
+        function ajaxCallback() {
+            if( httpRequest.readyState == XMLHttpRequest.DONE ){ // http 통신이 마무리 되었을 때
+                // 통신의 결과는 정상 ( http 200 ) 이거나, 그렇지 않은 다양한 경우....
+                if( httpRequest.status == 200 ){ // 결과가 정상인 경우에
+
+                    // 정상
+                    console.log( httpRequest.responseText );
+                    let userList = JSON.parse( httpRequest.responseText ); // 문자열(http 구간) ==> javascript 배열
+                    let userHtml = ``;
+                    userList.forEach( user => {
+                        userHtml += `<div><span>${user.userSeq}</span><span>${user.userName}</span><span>${user.userEmail}</span></div>`;
+                    });
+
+                    document.querySelector("#receivedData").innerHTML = userHtml;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
