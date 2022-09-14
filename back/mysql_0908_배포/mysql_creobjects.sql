@@ -1,4 +1,4 @@
-create database ssafydb;
+-- create database ssafydb;
 
 use ssafydb;
 
