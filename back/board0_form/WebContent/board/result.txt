@@ -16,12 +16,14 @@ out.println("  </head>");
 out.println("  <body>");
 out.println("    <div class=\"container\">");
 out.println("      <div class=\"row justify-content-center\">");
+
 out.println("        <div class=\"col-lg-8 col-md-10 col-sm-12\">");
 out.println("          <h2 class=\"my-3 py-3 shadow-sm bg-light text-center\">");
 out.println("            <mark class=\"sky\">글쓰기 결과</mark>");
 out.println("          </h2>");
 out.println("        </div>");
 out.println("        <div class=\"col-lg-8 col-md-10 col-sm-12\">");
+
 out.println("          <div class=\"card text-center bg-light\">");
 out.println("            <h2 class=\"fw-bold text-primary pt-3\">등록 완료!!!</h2>");
 out.println("            <div class=\"card-body\">");
@@ -31,6 +33,7 @@ out.println("                글목록 페이지 이동...");
 out.println("              </button>");
 out.println("            </div>");
 out.println("          </div>");
+
 out.println("          <div class=\"card text-center bg-light\">");
 out.println("            <h2 class=\"fw-bold text-danger pt-3\">등록 실패T.T</h2>");
 out.println("            <div class=\"card-body\">");

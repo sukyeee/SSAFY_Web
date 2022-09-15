@@ -16,6 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 public class HelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private String name;
+	public void init() {
+		name = "이수경";
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
