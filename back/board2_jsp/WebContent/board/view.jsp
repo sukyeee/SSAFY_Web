@@ -46,7 +46,7 @@
 		ResultSet rs = null;
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ssafyweb?serverTimezone=UTC", "root",
-					"EyaEya9210814!");
+					"1234");
 			StringBuilder sql = new StringBuilder();
 			sql.append("select article_no, user_id, subject, content, hit, register_time \n");
 			sql.append("from board \n");

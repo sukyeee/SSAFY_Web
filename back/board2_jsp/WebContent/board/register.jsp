@@ -29,7 +29,7 @@ Connection conn = null;
 PreparedStatement pstmt = null;
 int cnt = 0;
 try {
-	conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ssafyweb?serverTimezone=UTC", "root","EyaEya9210814!");
+	conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/ssafyweb?serverTimezone=UTC", "root","1234");
 	StringBuilder sql = new StringBuilder();
 	sql.append("insert into board ( user_id, subject, content, hit, register_time ) \n");
 	sql.append("values (?,?,?, 0, now())"); // 끝에 세미콜론 찍으면 문제생김!
