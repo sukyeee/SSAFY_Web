@@ -9,8 +9,9 @@
 	import javax.servlet.http.HttpServlet;
 	import javax.servlet.http.HttpServletRequest;
 	import javax.servlet.http.HttpServletResponse;
-	
-	import dto.UserDto;
+
+import dto.FoodDto;
+import dto.UserDto;
 	
 	// 목록 : /mvc2?job=list
 	// 등록 : /mvc2?job=insert
@@ -42,50 +43,102 @@
 	    switch( job ) {
 	    case "list" : list(request, response); break;
 	    case "insert" : insert(request, response); break;
-//	    case "delete" : delete(request, response); break;
-//	    case "modify" : modify(request, response); break;
-//	    case "detailList" : detailList(request, response); break;
+	    case "delete" : delete(request, response); break;
+	    case "modify" : modify(request, response); break;
+	    case "detail" : detail(request, response); break;
 
 	    // .......
 	    }
 	}
 	
 	private void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    ArrayList<UserDto> list = new ArrayList<>();
-	    list.add(new UserDto(1111, "홍길동", "hong@mail.com"));
-	    list.add(new UserDto(2222, "이길동", "lee@mail.com"));
-	    list.add(new UserDto(3333, "삼길동", "sam@mail.com"));
+	    ArrayList<FoodDto> list = new ArrayList<>();
+	    list.add(new FoodDto(1, "떡볶이", "3000"));
+	    list.add(new FoodDto(2, "초밥", "20000"));
+	    list.add(new FoodDto(3, "삼겹살", "50000"));
 	    
 	    // JSP로 Model(data)를 전달하고 forward
 	    request.setAttribute("list", list);
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/mvc/userList.jsp");
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/mvc/foodList.jsp");
 	    dispatcher.forward(request, response);
+	  
 	}
 	
 	private void insert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("ControllerServlet2 - insert() ");
 		// service - dao - db 등록 완료 
-		String username = request.getParameter("username");
-		System.out.println(username);
-		String password = request.getParameter("password");
-		String[] hobby = request.getParameterValues("hobby");
+		String foodname = request.getParameter("foodname");
+		String foodprice = request.getParameter("foodprice");
+		System.out.println(foodname);
+		System.out.println(foodprice);
+		String[] spicy = request.getParameterValues("spicy");
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("username : " + username).append(" password: " + password);
-		for (String str : hobby) {
+		sb.append("foodname : " + foodname).append("foodprice: " + foodprice);
+		for (String str : spicy) {
 			System.out.println(str);
-			sb.append(" hobby: " + str );
+			sb.append(" spicy: " + str );
 		}
 		
 		
-		UserDto userDto = new UserDto(111, username, "hong@hong.com");
+		FoodDto FoodDto = new FoodDto(4, foodname, "10000");
+		
 	    // JSP로 Model(data)를 전달하고 forward
-	    request.setAttribute("userDto", userDto);
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/mvc/userInsertResult.jsp");
+	    request.setAttribute("FoodDto", FoodDto);
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/mvc/foodInsertResult.jsp");
 	    dispatcher.forward(request, response);
 	}
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	  	
+		String foodname = request.getParameter("foodname");
+		FoodDto FoodDto = new FoodDto(4, foodname, "10000");
+		
+	    // JSP로 Model(data)를 전달하고 forward
+	    request.setAttribute("FoodDto", FoodDto);
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/mvc/foodDeleteResult.jsp");
+	    dispatcher.forward(request, response);
+	    
+	    
+	}
+	private void modify(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	  	
+		String foodname = request.getParameter("foodname");
+		FoodDto FoodDto = new FoodDto(4, foodname, "10000");
+		
+	    // JSP로 Model(data)를 전달하고 forward
+	    request.setAttribute("FoodDto", FoodDto);
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/mvc/foodModifyResult.jsp");
+	    dispatcher.forward(request, response);
+	    
+	    
+	}
+	private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+		  	
+			String foodname = request.getParameter("foodname");
+			FoodDto FoodDto = new FoodDto(4, foodname, "10000");
 	
+			if(foodname.equals("떡볶이")) {
+				FoodDto = new FoodDto(1, foodname, "3000");
+			}
+			else if(foodname.equals("초밥")) {
+				FoodDto = new FoodDto(2, foodname, "20000");
+			}
+			else if(foodname.equals("삼겹살")){
+				FoodDto = new FoodDto(3, foodname, "50000");
+			}
+			else FoodDto = new FoodDto(4, foodname, "99999");
+			
+		    // JSP로 Model(data)를 전달하고 forward
+		    request.setAttribute("FoodDto", FoodDto);
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/mvc/foodDetailResult.jsp");
+		    dispatcher.forward(request, response);
+		    
+		    
+		}
+		
 	
 	
 	

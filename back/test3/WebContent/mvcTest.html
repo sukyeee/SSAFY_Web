@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<a href="/mvc/list">url 리스트 조회</a>
+
+	<br />
+	<a href="/mvc2?job=list">parameter 리스트 조회</a>
+
+	<hr>
+
+	<p>번호 : 1 | 이름 : 홍길동 | 이메일 : hong@gmail.com</p>
+	<p>번호 : 2 | 이름 : 이길동| 이메일 : lee@gmail.com</p>
+	<p>번호 : 3 | 이름 : 삼길동 | 이메일 : sam@gmail.com</p>
+
+	<h4>url 리스트 등록</h4>
+	<form action="/mvc/insert" method="post">
+		번호 : <input type="number" name="number"> 이름 : <input
+			type="text" name="username"> 이메일 : <input type="email"
+			name="email">
+		<button type="submit">등록</button>
+	</form>
+
+
+
+	<h4>parameter 리스트 등록</h4>
+	<form action="/mvc2/" method="post">
+		<input type="hidden" name="job" value="insert" /> 번호 : <input
+			type="number" name="number"> 이름 : <input type="text"
+			name="username"> 이메일 : <input type="email" name="email">
+		<button type="submit">등록</button>
+	</form>
+
+
+	<hr>
+	<h4>url 리스트 수정</h4>
+	<form action="/mvc/modify" method="post">
+		번호 : <input type="number" name="number"> 이름 : <input
+			type="text" name="username"> 이메일 : <input type="email"
+			name="email">
+		<button type="submit">수정</button>
+	</form>
+
+
+
+	<h4>parameter 리스트 수정</h4>
+	<form action="/mvc2/" method="post">
+		<input type="hidden" name="job" value="modify" /> 번호 : <input
+			type="number" name="number"> 이름 : <input type="text"
+			name="username"> 이메일 : <input type="email" name="email">
+		<button type="submit">수정</button>
+	</form>
+
+	<hr>
+
+	<h4>url 리스트 삭제</h4>
+	<form action="/mvc/delete" method="post">
+		번호 : <input type="number" name="number"> 이름 : <input
+			type="text" name="username"> 이메일 : <input type="email"
+			name="email">
+		<button type="submit">삭제</button>
+	</form>
+
+
+
+
+	<h4>parameter 리스트 삭제</h4>
+	<form action="/mvc2/" method="post">
+		<input type="hidden" name="job" value="delete" /> 번호 : <input
+			type="number" name="number"> 이름 : <input type="text"
+			name="username"> 이메일 : <input type="email" name="email">
+		<button type="submit">삭제</button>
+	</form>
+
+
+	<hr>
+
+
+
+
+
+</body>
+</html>
