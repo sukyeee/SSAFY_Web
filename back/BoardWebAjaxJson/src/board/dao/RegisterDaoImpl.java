@@ -8,7 +8,7 @@ import board.common.DBManager;
 import board.dto.UserDto;
 
 // Singleton 
-public class RegisterDaoImpl implements LoginDao{
+public class RegisterDaoImpl implements RegisterDao{
 
 	private static RegisterDaoImpl instance = new RegisterDaoImpl();
 	private RegisterDaoImpl() {}
@@ -18,7 +18,7 @@ public class RegisterDaoImpl implements LoginDao{
 	}
 	
 	@Override
-	public UserDto login(String userEmail) {
+	public boolean register(String userName, String userEmail, String userPassword) {
 		UserDto userDto = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -28,22 +28,16 @@ public class RegisterDaoImpl implements LoginDao{
 			// Connection 객체 획득
 			con = DBManager.getConnection();
 			StringBuilder sb = new StringBuilder();
-			sb.append(" SELECT USER_SEQ, USER_NAME, USER_PASSWORD, USER_EMAIL, USER_PROFILE_IMAGE_URL,USER_REGISTER_DATE ")
-			.append(" FROM USERS WHERE USER_EMAIL = ? ");
+			sb.append(" INSERT INTO `board`.`users` (`USER_NAME`, `USER_PASSWORD`, `USER_EMAIL`) VALUES ( ?, ?, ?) ");
+			
 			pstmt = con.prepareStatement(sb.toString());
-			pstmt.setString(1, userEmail);
+			pstmt.setString(1, userName);
+			pstmt.setString(2, userPassword);
+			pstmt.setString(3, userEmail);
+			
 			System.out.println(sb.toString());
 			
-			rs = pstmt.executeQuery();
-			if( rs.next() ) {
-				userDto = new UserDto();
-				userDto.setUserSeq( rs.getInt("USER_SEQ"));
-				userDto.setUserName(rs.getString("USER_NAME"));
-				userDto.setUserPassword(rs.getString("USER_PASSWORD"));
-				userDto.setUserEmail(rs.getString("USER_EMAIL"));
-				userDto.setUserProfileImageUrl(rs.getString("USER_PROFILE_IMAGE_URL"));
-				userDto.setUserRegisterDate(rs.getDate("USER_REGISTER_DATE"));
-			}
+			pstmt.executeUpdate();
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -52,7 +46,7 @@ public class RegisterDaoImpl implements LoginDao{
 			DBManager.releaseConnection(rs, pstmt, con);
 		}
 		
-		return userDto;
+		return true;
 	}
 
 }

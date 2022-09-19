@@ -4,8 +4,6 @@ import java.util.Date;
 
 public class UserDto {
 	
-	
-
 	private int userSeq;
     private String userName;
     private String userPassword;

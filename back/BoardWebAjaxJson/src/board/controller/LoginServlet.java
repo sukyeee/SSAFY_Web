@@ -41,8 +41,6 @@ public class LoginServlet extends HttpServlet {
 		String userEmail = request.getParameter("userEmail");
 		String userPassword = request.getParameter("userPassword");
 		
-		System.out.println("userEmail: " + userEmail);
-		
 		LoginService service = LoginServiceImpl.getInstance();
 		UserDto userDto = service.login(userEmail, userPassword);
 	

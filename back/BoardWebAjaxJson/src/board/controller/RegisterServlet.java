@@ -13,8 +13,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import board.dto.UserDto;
-import board.service.LoginService;
-import board.service.LoginServiceImpl;
+import board.service.RegisterService;
+import board.service.RegisterServiceImpl;
 
 
 @WebServlet("/register")
@@ -38,24 +38,23 @@ public class RegisterServlet extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		
 		// 파라미터
+		String userName = request.getParameter("userName");
 		String userEmail = request.getParameter("userEmail");
 		String userPassword = request.getParameter("userPassword");
 		
-		System.out.println("userEmail: " + userEmail);
-		
-		LoginService service = LoginServiceImpl.getInstance();
-		UserDto userDto = service.login(userEmail, userPassword);
+//		LoginService service = LoginServiceImpl.getInstance();
+//		UserDto userDto = service.login(userEmail, userPassword);
+		RegisterService service = RegisterServiceImpl.getInstance();
+		boolean alreadyUserExist = service.register(userName, userEmail, userPassword);
 	
-		System.out.println(userDto);
+		System.out.println(alreadyUserExist);
 		
 		// 성공, 실패에 대한 처리
 		// 성공: 1. session 에 사용자 정보 UserDto 를 저장, 2. 로그인 성공 결과를 client 에 return (json)
 		// 실패: 로그인 실패 결과를 client에 return (json)
 		
-		if( userDto != null ) {
-			HttpSession session = request.getSession();
-			session.setAttribute("userDto", userDto);
-			// "result":"success"
+		if( !alreadyUserExist ) { 
+		// "result":"success"
 			Gson gson = new Gson();
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.addProperty("result", "success");
@@ -63,9 +62,13 @@ public class RegisterServlet extends HttpServlet {
 			String jsonStr = gson.toJson(jsonObject);
 			response.getWriter().write(jsonStr);
 			
-			System.out.println("LoginServlet - login success");
+			System.out.println("RegisterServlet - register success");
 		} else {
-			// "result":"success"
+			// "result":"fail"
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("alreadyUserExist", true); // 이미 유저 있음 
+			
 			Gson gson = new Gson();
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.addProperty("result", "fail");
@@ -73,7 +76,7 @@ public class RegisterServlet extends HttpServlet {
 			String jsonStr = gson.toJson(jsonObject);
 			response.getWriter().write(jsonStr);
 			
-			System.out.println("LoginServlet - login fail");
+			System.out.println("RegisterServlet - register fail");
 		}
 	}
 

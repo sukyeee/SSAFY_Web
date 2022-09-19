@@ -3,7 +3,7 @@ package board.service;
 import board.dto.UserDto;
 
 public interface RegisterService {
-	public UserDto login(String userEmail, String userPassword);
+	public boolean register(String userName, String userEmail, String userPassword);
 	
 	
 	

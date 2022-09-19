@@ -1,7 +1,6 @@
 package board.dao;
 
-import board.dto.UserDto;
 
 public interface RegisterDao {
-	public UserDto login(String userEmail);
+	public boolean register(String userName, String userEmail, String userPassword);
 }
