@@ -17,7 +17,7 @@ import board.service.RegisterService;
 import board.service.RegisterServiceImpl;
 
 
-@WebServlet("/register")
+//@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

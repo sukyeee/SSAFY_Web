@@ -23,20 +23,18 @@ public class RegisterServiceImpl implements RegisterService{
 		UserDto userDto = loginDao.login(userEmail);
 		
 		RegisterDao registerDao = RegisterDaoImpl.getInstance();
-		boolean alreadyUserExist = registerDao.register(userName, userEmail, userPassword);
-	
-		// 이미 존재하는  이메일 있으면 실패!
-		System.out.println("userDto" + userDto);
-		System.out.println("register" + alreadyUserExist);
+		boolean ret = registerDao.register(userName, userEmail, userPassword);
+		// ret이 true이면 Insert 성공
 		
-		if( userDto == null || userDto != null && userDto.getUserEmail().equals(userEmail) ) { // 이미 있는 이메일이면 true
-			return true;
+		// 이미 존재하는  이메일 있으면 실패!
+		if( userDto != null && userDto.getUserEmail().equals(userEmail) ) { // 이미 있는 이메일이면 true
+			// 이미 이메일 존재함, 실패
+			return true; 
 		} else {
+			// 성공
 			return false;
 		}
 	}
 	
-	
-
 
 }

@@ -12,12 +12,24 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
 </head>
 <body>
 	<body>
         <div class="container">
-            <div class="mb-3 d-flex justify-content-center">
-                <h1>suky's</h1>
+            <div class="mb-3 mt-3 d-flex justify-content-center">
+                 <h1>👩‍👨‍👩‍👧‍👦숙희 마을👩‍👨‍👩‍👧‍👦</h1>
             </div>
             <div class="mb-3">
                 <h2>Login</h2>
@@ -28,7 +40,7 @@
             </div>
             <div class="mb-3">
             <label for="userPassword" class="form-label">password</label>
-            <input type="email" class="form-control" id="userPassword" placeholder="비밀번호를 입력하세요" value="1234">
+            <input type="password" class="form-control" id="userPassword" placeholder="비밀번호를 입력하세요" value="1234">
             </div>
             
             <div>
@@ -39,7 +51,7 @@
     
         <script>
             window.onload = function() {
-                document.querySelector("#btnLogin").onclick = function() {
+            	document.querySelector("#btnLogin").onclick = function() {
                     let userEmailValue = document.querySelector("#userEmail").value;
                     let userPasswordValue = document.querySelector("#userPassword").value;
                     console.log( userEmailValue )
@@ -106,7 +118,7 @@
                 if( data.result == "success" ){ // login.jsp => boardMain.jsp로 페이지 이동 ( 새로운 페이지(html....) 요청)
                     window.location.href = "<%= contextPath%>/board/boardMain";
                 }else if( data.result == "fail" ){
-                    alert('아이디 또는 패스워드를 확인하세요.');
+                    alertify.error('아이디 또는 패스워드를 확인하세요');
                 }
                 //fetch(url, option)
             }

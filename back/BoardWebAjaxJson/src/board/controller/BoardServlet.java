@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import board.dto.BoardDto;
 import board.dto.UserDto;
+import board.service.BoardService;
 
 @WebServlet("/board/*")
 public class BoardServlet extends HttpServlet {
@@ -26,6 +28,17 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     
     HttpSession session = request.getSession();
     UserDto userDto = (UserDto) session.getAttribute("userDto");
+  
+    int boardId = Integer.parseInt(request.getParameter("boardId"));
+    String content = request.getParameter("content");
+    String title = request.getParameter("title");
+    
+    BoardDto boardDto = new BoardDto();
+    boardDto.setBoardId(boardId);
+    boardDto.setContent(content);
+    
+    int ret = BoardService.insertBoard(boardDto);
+    
     
     if( userDto != null ) System.out.println("로그인 사용자 / 세션이 유효함");
     else System.out.println("미로그인 사용자/ 세션이 유효하지 않음");
@@ -36,8 +49,14 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     
     switch(path) {
     case "/board/boardMain": boardMain(request, response); break;
+    case "/board/boardInsert": boardInsert(request, response); break;
     // 게시판의 다른 기능
     }
+}
+
+private void boardInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/board/boardInsert.jsp");
+    dispatcher.forward(request, response);
 }
 
 private void boardMain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

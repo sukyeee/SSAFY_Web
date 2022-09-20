@@ -8,37 +8,39 @@ import board.common.DBManager;
 import board.dto.UserDto;
 
 // Singleton 
-public class RegisterDaoImpl implements RegisterDao{
+public class InsertBoardDaoImpl implements InsertBoardDao{
 
-	private static RegisterDaoImpl instance = new RegisterDaoImpl();
-	private RegisterDaoImpl() {}
+	private static InsertBoardDaoImpl instance = new InsertBoardDaoImpl();
+	private InsertBoardDaoImpl() {}
 	
-	public static RegisterDaoImpl getInstance() {
+	public static InsertBoardDaoImpl getInstance() {
 		return instance;
 	}
 	
+
 	@Override
-	public boolean register(String userName, String userEmail, String userPassword) {
-		UserDto userDto = null;
+	public int insertBoard(int userSeq, String title, String content, int boardReadCount) {
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		boolean ret = false;
+		int ret = -1;
 		try {
 			// Connection 객체 획득
 			con = DBManager.getConnection();
 			StringBuilder sb = new StringBuilder();
-			sb.append(" INSERT INTO `board`.`users` (`USER_NAME`, `USER_PASSWORD`, `USER_EMAIL`) VALUES ( ?, ?, ?) ");
+			sb.append(" INSERT INTO `board`.`board` (`USER_SEQ`, `TITLE`, `CONTENT`, `REG_DT`, `READ_COUNT` ) VALUES ( ?, ?, ?, now(), ?) ");
 			
 			pstmt = con.prepareStatement(sb.toString());
-			pstmt.setString(1, userName);
-			pstmt.setString(2, userPassword);
-			pstmt.setString(3, userEmail);
+			pstmt.setInt(1, userSeq);
+			pstmt.setString(2, title);
+			pstmt.setString(3, content);
+			pstmt.setInt(4, boardReadCount);
 			
 			System.out.println(sb.toString());
 			
-			pstmt.executeUpdate();
+			ret = pstmt.executeUpdate(); // 영향받은 row 수 return
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -47,7 +49,7 @@ public class RegisterDaoImpl implements RegisterDao{
 			DBManager.releaseConnection(rs, pstmt, con);
 		}
 		
-		return true;
+		return ret;
 	}
 
 }
