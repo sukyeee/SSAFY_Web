@@ -23,7 +23,7 @@
             <input type="email" class="form-control" id="userEmail" placeholder="이메일을 입력하세요" value="sk@my.com">
         </div>
         <div class="mb-3">
-        <label for="userPassword" class="form-label">Email address</label>
+        <label for="userPassword" class="form-label">password</label>
         <input type="email" class="form-control" id="userPassword" placeholder="비밀번호를 입력하세요" value="1234">
         </div>
         
@@ -44,19 +44,67 @@
                 // 프론트 -> 백엔드로 넘기기 전에,
                 // 유효성 검사 => post 전송 
                 if( validate() ){
+                    alert('valid');
                     login();
                 } else {
                     // 유효성 검사 실패에 대한 UI 처리
+                    alert('아이디 또는 패스워드를 확인하세요.');
                 }
             }
         }
 
         function validate(){
             // return true / false
+            let isUserEmailValid = false;
+            let isUserPasswordValid = false;
+
+            let userEmailValue = document.querySelector("#userEmail").value;
+            if( userEmailValue.length > 0 ){
+                isUserEmailValid = true;
+            }
+
+            let userPasswordValue = document.querySelector("#userPassword").value;
+            if( userPasswordValue.length > 0 ){
+                isUserPasswordValid = true;
+            }
+         
+            if( isUserEmailValid && isUserPasswordValid ){
+                return true;
+            }
+            return false;
+
         }
         
-        function login() {
+        async function login() {
             //validate() 가 true 를 return 하면 수행
+            // 백엔드로 전송한 데이터(파라미터) 준비
+            // 비동기로 요청
+            // POST
+            // 로그인 성공 => 게시판 메인 페이지로 이동 ( /board/boardMain)
+            // 로그인 실패 => alert
+
+            let userEmail = document.querySelector("#userEmail").value;
+            let userPassword = document.querySelector("#userPassword").value;
+
+            // parameter
+            let urlParams = new URLSearchParams({
+                userEmail : userEmail,
+                userPassword: userPassword
+            });
+            // fetch options
+            let fetchOptions = {
+                method: "POST",
+                body: urlParams
+            }
+
+            let response = await fetch( "BoardWebAjaxJson/login", fetchOptions );
+            let data = await response.json(); // json => javascript object <= JSON.parse()
+            if( data.result == "success" ){ // login.jsp => boardMain.jsp로 페이지 이동 ( 새로운 페이지(html....) 요청)
+                window.location.href = "context path /board/boardMain";
+            }else if( data.result == "fail" ){
+                alert('아이디 또는 패스워드를 확인하세요.');
+            }
+            //fetch(url, option)
         }
     </script>
 </body>
