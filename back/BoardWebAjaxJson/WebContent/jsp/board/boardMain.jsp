@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+    String contextPath = request.getContextPath();
+%>
     <!DOCTYPE html>
     <html lang="en">
     
@@ -176,21 +179,58 @@
                     <form>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">제목</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="title" placeholder="제목을 입력하세요">
                       </div>
                       <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+                        <textarea class="form-control" id="content" rows="10"></textarea>
                       </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-primary">등록</button>
+                <button  id="insertBtn" type="button" class="btn btn-primary">등록</button>
                 </div>
             </div>
             </div>
         </div>
     
+    <script>
+    
+        window.onload = function() {
+            document.querySelector("#insertBtn").onclick = function () {
+            
+                insert();
+            }
+        };
+
+        async function insert() {
+            let title = document.querySelector("#title").value;
+            let content = document.querySelector("#content").value;
+			console.log(title);
+			
+            // parameter
+            let urlParams = new URLSearchParams({
+                title : title,
+                content: content
+            });
+            // fetch options
+            let fetchOptions = {
+                method: "POST",
+                body: urlParams
+            }
+            
+            let response = await fetch( "<%= contextPath%>/board/boardInsert", fetchOptions );
+            let data = await response.json(); // json => javascript object <= JSON.parse()
+            if( data.result == "success" ){ // login.jsp => boardMain.jsp로 페이지 이동 ( 새로운 페이지(html....) 요청)
+             	alertify.alert("등록완료" ,function(){
+	        		  window.location.href = "<%=contextPath%>/board/boardMain";
+				})
+            }else if( data.result == "fail" ){
+                alertify.error('게시글 등록 오류');
+            }
+        }
+    
+    </script>
     </body>
     
     </html>
