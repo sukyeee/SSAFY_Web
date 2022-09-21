@@ -158,6 +158,43 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal Update -->
+	<div class="modal fade" id="boardUpdateModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">🎨숙희마을 게시판 상세보기 🎨</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+			    <table class="table table-hover">
+	          	    <tbody >
+	          	    	<tr><td>글 번호</td><td id="boardIdUpdate">#</td></tr>
+	          	    	<tr><td>제목</td><td id="titleUpdate"><input type="text" id="titleInput"/></td></tr>
+	          	    	<tr><td>내용</td><td id="contentUpdate"><input type="text" id="contentInput" /></td></tr>
+	          	    	<tr><td>작성자</td><td id="userNameUpdate">#</td></tr>
+	          	    	<tr><td>작성일시</td><td id="regDtUpdate">#</td></tr>
+	          	    	<tr><td>조회수</td><td id="readCountUpdate">#</td></tr>
+	                </tbody>
+           		 </table>
+           		 
+           		 <button id="btnBoardUpdateComplete" type="button" class="btn btn-sm btn-outline-primary float-end">수정 완료</button>
+           		 
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
 	<script src="<%=contextPath %>/js/util.js"></script>
 	<script>
 	var OFFSET = 0;
@@ -201,13 +238,7 @@
 				}
 			};
 			
-			// delete
-			document.querySelector("#btnBoardDeleteConfirm").onclick = function() {
-				
-					boardDelete(boardId);
-			
-			};
-			
+		
    		} 
    
    		// GET
@@ -224,6 +255,7 @@
    				let data = await response.json();
    				console.log( data )
    				makeListHtml( data );
+   				
    				
    			} catch( error ) {
    				console.log(error);
@@ -350,7 +382,44 @@
 					document.querySelector("#boardDetailModal")
 				);
 				
+			modal.show();
+			
+			// delete
+			document.querySelector("#btnBoardDeleteConfirm").onclick = function() {
+				boardDelete(boardId);
+			
+			};
+			
+			// update
+			document.querySelector("#btnBoardUpdateForm").onclick = function() {
+				// 수정 버튼 누르면 모달 창 수정 상태로 변경되어야 함 
+				document.querySelector("#boardIdUpdate").innerHTML = boardId;
+	   	    	//document.querySelector("#titleUpdate").innerHTML = title;
+	   	    	//document.querySelector("#contentUpdate").innerHTML = content;
+	   	    	document.querySelector("#userNameUpdate").innerHTML = userName;
+	   	    	document.querySelector("#regDtUpdate").innerHTML = regDtStr;
+	   	 		document.querySelector("#readCountUpdate").innerHTML = readCount;
+   	    	
+			
+				
+				let modal = new bootstrap.Modal(
+				document.querySelector("#boardUpdateModal")
+				);
 				modal.show();
+
+			
+				document.querySelector("#btnBoardUpdateComplete").onclick = function() {
+				// 수정 완료 버튼
+				 title = document.querySelector("#titleInput").value;
+				 content = document.querySelector("#contentInput").value;	
+				
+				boardUpdate(boardId, title, content );
+				};
+				
+			};
+			
+		
+			
    		}
    		///////////////////////////////////////
         function validateInsert(){
@@ -402,9 +471,9 @@
         
         // delete
         
-        async function boardDelete(boardId) {
+        async function boardDelete( boardId ) {
         	
-            let url = '<%= contextPath %>/board/boardDetail';
+            let url = '<%= contextPath %>/board/boardDelete';
             let urlParams = '?boardId=' + boardId;
              let fetchOptions = {
                 method: 'GET',
@@ -414,13 +483,37 @@
                 let response = await fetch( url + urlParams, fetchOptions );
                 let data = await response.json();
                 console.log( data )
-            
+                boardDeleteConfirm( data ) 
+                
             } catch( error ) {
                 console.log(error);
-                alertify.error('글 조회 과정에서 문제가 생겼습니다.');
+                alertify.error('글 삭제 과정에서 문제가 생겼습니다.');
             }
         }
         
+        // update 
+     	 async function boardUpdate( boardId, title, content ) {
+     		 
+             let url = '<%= contextPath %>/board/boardUpdate';
+             let urlParams = '?boardId=' + boardId + '&title=' + title + '&content=' + content;
+             let fetchOptions = {
+                method: 'GET',
+                }
+			console.log('boardUpdate - boardId' + boardId)
+			console.log('boardUpdate - title' + title)
+			console.log(content)
+			
+             
+            try {
+                let response = await fetch( url + urlParams, fetchOptions );
+                let data = await response.json();
+                console.log( data )
+                
+            } catch( error ) {
+                console.log(error);
+                alertify.error('글 수정 과정에서 문제가 생겼습니다.');
+            }
+        }
         
         
     </script>

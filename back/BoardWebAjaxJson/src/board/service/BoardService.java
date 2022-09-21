@@ -14,6 +14,6 @@ public interface BoardService {
 	
 	BoardDto boardDetail(int boardId, int userSeq); // 상세
 	int boardDelete(int boardId, int userSeq); // 삭제
-	
+	int boardUpdate(BoardDto dto, int userSeq); // 수정
 
 }

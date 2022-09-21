@@ -67,9 +67,51 @@ public class BoardServlet extends HttpServlet {
 		case "/board/boardDelete":
 			boardDelete(request, response);
 			break;
+		case "/board/boardUpdate":
+			boardUpdate(request, response);
+			break;
 		// 게시판의 다른 기능
 
 		}
+	}
+
+	
+	private void boardUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String strBoardId = request.getParameter("boardId");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		
+		int boardId = Integer.parseInt(strBoardId);
+		
+		System.out.println(title);
+		System.out.println(content);
+
+		BoardDto boardDto = new BoardDto();
+		boardDto.setBoardId(boardId);
+		boardDto.setTitle(title);
+		boardDto.setContent(content);
+		
+		HttpSession session = request.getSession();
+		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		int userSeq = userDto.getUserSeq();
+
+		int ret = service.boardUpdate(boardDto, userSeq);
+
+		
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("result", "success");
+
+		if (ret == 1) {
+			jsonObject.addProperty("result", "success");
+		} else {
+			jsonObject.addProperty("result", "fail");
+		}
+		
+		String jsonStr = gson.toJson(jsonObject);
+		response.getWriter().write(jsonStr);
+		
 	}
 
 	private void boardDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
