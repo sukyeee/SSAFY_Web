@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import board.common.DBManager;
-import board.dto.BoardDto;
+import board.dto.BoardDto_me;
 
 // Singleton 
 public class InsertBoardDaoImpl implements InsertBoardDao{
@@ -19,7 +19,7 @@ public class InsertBoardDaoImpl implements InsertBoardDao{
 	
 
 	@Override
-	public int insertBoard(BoardDto boardDto) {
+	public int insertBoard(BoardDto_me boardDto) {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;

@@ -1,7 +1,7 @@
 package board.service;
 
-import board.dto.BoardDto;
+import board.dto.BoardDto_me;
 
 public interface InsertBoardService {
-	int insertBoard(BoardDto boardDto);
+	int insertBoard(BoardDto_me boardDto);
 }

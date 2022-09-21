@@ -4,7 +4,7 @@ import board.dao.InsertBoardDao;
 import board.dao.InsertBoardDaoImpl;
 import board.dao.UserDao;
 import board.dao.UserDaoImpl;
-import board.dto.BoardDto;
+import board.dto.BoardDto_me;
 import board.dto.UserDto;
 
 public class InsertBoardServiceImpl implements InsertBoardService{
@@ -21,7 +21,7 @@ public class InsertBoardServiceImpl implements InsertBoardService{
 	
 	int sum = 0;
 	@Override
-	public int insertBoard(BoardDto boardDto) {
+	public int insertBoard(BoardDto_me boardDto) {
 		
 //		sum += 10; // 멤버변수가 상태값을 가져버면 thread-safe하지 않다!!!!
 		// 이런 것은 싱글톤으로 만들면 안됌
