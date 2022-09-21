@@ -47,5 +47,9 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return boardDto;
 	}
+	@Override
+	public int boardDelete(int boardId, int userSeq) {
+		return dao.boardDelete(boardId);
+	}
 
 }

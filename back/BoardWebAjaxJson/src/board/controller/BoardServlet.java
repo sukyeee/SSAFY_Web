@@ -64,10 +64,38 @@ public class BoardServlet extends HttpServlet {
 		case "/board/boardInsert":
 			boardInsert(request, response);
 			break;
-
+		case "/board/boardDelete":
+			boardDelete(request, response);
+			break;
 		// 게시판의 다른 기능
 
 		}
+	}
+
+	private void boardDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String strBoardId = request.getParameter("boardId");
+		int boardId = Integer.parseInt(strBoardId);
+
+		HttpSession session = request.getSession();
+		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		int userSeq = userDto.getUserSeq();
+
+		int ret = service.boardDelete(boardId, userSeq);
+
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("result", "success");
+
+		if (ret == 1) {
+			jsonObject.addProperty("result", "success");
+		} else {
+			jsonObject.addProperty("result", "fail");
+		}
+		
+		String jsonStr = gson.toJson(jsonObject);
+		response.getWriter().write(jsonStr);
+		
 	}
 
 	private void boardMain(HttpServletRequest request, HttpServletResponse response)

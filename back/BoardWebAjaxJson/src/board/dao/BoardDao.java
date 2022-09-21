@@ -13,5 +13,6 @@ public interface BoardDao {
 	int boardListSearchWordTotalCnt(String searchWord);
 	
 	BoardDto boardDetail(int boardId); // 상세
- 
+	int boardDelete(int boardId); // 삭제
+	 
 }

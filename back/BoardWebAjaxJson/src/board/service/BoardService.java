@@ -13,5 +13,7 @@ public interface BoardService {
 	int boardListSearchWordTotalCnt(String searchWord);
 	
 	BoardDto boardDetail(int boardId, int userSeq); // 상세
+	int boardDelete(int boardId, int userSeq); // 삭제
+	
 
 }

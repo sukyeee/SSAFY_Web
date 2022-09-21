@@ -200,6 +200,14 @@
 					alertify.error("입력을 확인해 주세요.");
 				}
 			};
+			
+			// delete
+			document.querySelector("#btnBoardDeleteConfirm").onclick = function() {
+				
+					boardDelete(boardId);
+			
+			};
+			
    		} 
    
    		// GET
@@ -391,6 +399,29 @@
                   alertify.error('글 등록 과정에서 오류가 발생했습니다.');
               }
         }
+        
+        // delete
+        
+        async function boardDelete(boardId) {
+        	
+            let url = '<%= contextPath %>/board/boardDetail';
+            let urlParams = '?boardId=' + boardId;
+             let fetchOptions = {
+                method: 'GET',
+                }
+
+            try {
+                let response = await fetch( url + urlParams, fetchOptions );
+                let data = await response.json();
+                console.log( data )
+            
+            } catch( error ) {
+                console.log(error);
+                alertify.error('글 조회 과정에서 문제가 생겼습니다.');
+            }
+        }
+        
+        
         
     </script>
     </body>

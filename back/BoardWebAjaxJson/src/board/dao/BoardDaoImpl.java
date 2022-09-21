@@ -235,4 +235,32 @@ public class BoardDaoImpl implements BoardDao {
 
 		return boardDto;
 	}
+
+	@Override
+	public int boardDelete(int boardId) {
+	
+		BoardDto boardDto = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ret = -1;
+		
+		try {
+			con = DBManager.getConnection();
+			StringBuilder sb = new StringBuilder();
+			sb.append( " delete from board where board_id = ? " );
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, boardId);
+			
+			ret = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.releaseConnection(rs, pstmt, con);
+		}
+
+		return ret;
+	}
 }
