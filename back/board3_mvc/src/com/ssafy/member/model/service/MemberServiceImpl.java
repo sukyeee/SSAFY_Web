@@ -25,14 +25,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void joinMember(MemberDto memberDto) throws Exception {
-		// TODO Auto-generated method stub
-
+		// validation check (서버에서 유효성 체크)
+		memberDao.joinMember(memberDto);
 	}
 
 	@Override
 	public MemberDto loginMember(String userId, String userPwd) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return memberDao.loginMember(userId, userPwd);
 	}
 
 }

@@ -1,3 +1,4 @@
+<%@page import="com.ssafy.member.model.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${ pageContext.request.contextPath }"  ></c:set>
@@ -23,7 +24,12 @@ String root = request.getContextPath();
     <title>SSAFY</title>
   </head>
   <body>
-  
+  	<c:if test="${userinfo eq null }" >
+  		<c:if test="${cookie.ssafy_id.value ne null }">
+  			<c:set var="idck" value=" checked" ></c:set>
+  			<c:set var="svid" value="${cookie.ssafy_id.value}" ></c:set>
+  			
+  		</c:if>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
@@ -33,7 +39,7 @@ String root = request.getContextPath();
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12">
           <form id="form-login" method="POST" action="">
-
+			<input type="hidden" name="act" value="login">
             <div class="form-check mb-3 float-end">
               <input
                 class="form-check-input"
@@ -41,6 +47,7 @@ String root = request.getContextPath();
                 value="ok"
                 id="saveid"
                 name="saveid"
+                ${idck}
               />
               <label class="form-check-label" for="saveid"> 아이디저장 </label>
             </div>
@@ -52,6 +59,7 @@ String root = request.getContextPath();
                 id="userid"
                 name="userid"
                 placeholder="아이디..."
+                value="${svid}"
               />
             </div>
             <div class="mb-3">
@@ -105,10 +113,11 @@ String root = request.getContextPath();
     </script>
     
     
-    
-  
+   </c:if> 
+   <c:if test="${userinfo ne null }" >
+ 
     <div class="container">
-
+		<%@ include file="/common/confirm.jsp" %>
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
           <h2 class="my-3 py-3 shadow-sm bg-light text-center">
@@ -116,11 +125,11 @@ String root = request.getContextPath();
           </h2>
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12 text-center">
-          <a href="${root}/board">글쓰기</a><br />
-          <a href="${root}/board">글목록</a>
+          <a href="${root}/board?act=mvwrite">글쓰기</a><br />
+          <a href="${root}/board?act=list">글목록</a>
         </div>
       </div>
     </div>
-
+</c:if>
   </body>
 </html>
