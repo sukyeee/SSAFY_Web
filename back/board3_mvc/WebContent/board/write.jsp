@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp" %>
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
@@ -8,7 +8,7 @@
         </div>
         <div class="col-lg-8 col-md-10 col-sm-12">
           <form id="form-register" method="POST" action="">
-
+			<input type="hidden" name="act" value="write">
             <div class="mb-3">
               <label for="subject" class="form-label">제목 : </label>
               <input

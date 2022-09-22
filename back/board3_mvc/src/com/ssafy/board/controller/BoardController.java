@@ -1,7 +1,6 @@
 package com.ssafy.board.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,10 +33,22 @@ public class BoardController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String act = request.getParameter("act");
 		
+
+		int pgNo = ParameterCheck.notNumberToOne(request.getParameter("pgno"));
+		String key = ParameterCheck.nullToBlank(request.getParameter("key"));
+		String word = ParameterCheck.nullToBlank(request.getParameter("word"));
+		String queryString = "?pgno=" + pgNo + "&key=" + key + "&word=" + word;
+		System.out.println("pgNo:"+ pgNo + "key" + key + "word" + word);
+		
+		map = new HashMap<>();
+		map.put("pgno", pgNo + "");
+		map.put("key", key);
+		map.put("word", word);
+		
 		String path = "/index.jsp";
 		if("list".equals(act)) {
 			path = list(request, response);
-			forward(request, response, path);
+			forward(request, response, path + queryString );
 		} else if("mvwrite".equals(act)) {
 			path = "/board/write.jsp";
 			redirect(request, response, path);
@@ -46,7 +57,7 @@ public class BoardController extends HttpServlet {
 			forward(request, response, path);
 		} else if("view".equals(act)) {
 			path = view(request, response);
-			forward(request, response, path);
+			forward(request, response, path + queryString);
 		} else if("mvmodify".equals(act)) {
 			path = mvModify(request, response);
 			forward(request, response, path);
@@ -76,15 +87,81 @@ public class BoardController extends HttpServlet {
 	}
 
 	private String list(HttpServletRequest request, HttpServletResponse response) {
-		return "";
+		
+		HttpSession session = request.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		if(memberDto != null ) {
+		
+			int pgNo = ParameterCheck.notNumberToOne(request.getParameter("pgno"));
+			String key = ParameterCheck.nullToBlank(request.getParameter("key"));
+			String word = ParameterCheck.nullToBlank(request.getParameter("word"));
+			
+			System.out.println("pgNo:"+ pgNo + "key" + key + "word" + word);
+			
+			Map<String ,String> map = new HashMap<>();
+			map.put("pgno", pgNo + "");
+			map.put("key", key);
+			map.put("word", word);
+		
+		try {
+			List<BoardDto> list = boardService.listArticle(map);
+			request.setAttribute("articles", list);
+			return "/board/list.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "글 목록 얻기 중 에러 발생!!!");
+			return "/error/error.jsp";
+		}
+		}
+		else {
+			return "/user/login.jsp";
+		}
+		
+		
 	}
 
 	private String write(HttpServletRequest request, HttpServletResponse response) {
-		return "";
+		HttpSession session = request.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		if(memberDto != null ) {
+			BoardDto boardDto = new BoardDto();
+			boardDto.setUserId(memberDto.getUserId());
+			boardDto.setSubject(request.getParameter("subject"));
+			boardDto.setContent(request.getParameter("content"));
+			try {
+				boardService.writeArticle(boardDto);
+				return "/board?act=list&pgno=1&key=&word="; // redirect 해야함
+			} catch (Exception e) {
+				e.printStackTrace();
+				request.setAttribute("msg", "글 작성 중 에러 발생!!!");
+				return "/error/error.jsp";
+			}
+		} else {
+			return "/user/login.jsp";
+		}
 	}
 	
 	private String view(HttpServletRequest request, HttpServletResponse response) {
-		return "";
+		HttpSession session = request.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		if(memberDto != null ) {
+		
+		try {
+			int articleNo = Integer.parseInt(request.getParameter("articleno"));
+			BoardDto boardDto = boardService.getArticle(articleNo);
+			boardService.updateHit(articleNo);
+			request.setAttribute("article", boardDto);
+			return "/board/view.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "글 목록 얻기 중 에러 발생!!!");
+			return "/error/error.jsp";
+		}
+		}
+		else {
+			return "/user/login.jsp";
+		}
+	
 	}
 
 	private String mvModify(HttpServletRequest request, HttpServletResponse response) {
@@ -96,7 +173,24 @@ public class BoardController extends HttpServlet {
 	}
 
 	private String delete(HttpServletRequest request, HttpServletResponse response) {
-		return "";
+		HttpSession session = request.getSession();
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		if(memberDto != null ) {
+		
+		try {
+			int articleNo = Integer.parseInt(request.getParameter("articleno"));
+			boardService.deleteArticle(articleNo);
+			
+			return "/board?act=list&pgno=1&key=&word=";
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.setAttribute("msg", "글 목록 얻기 중 에러 발생!!!");
+			return "/error/error.jsp";
+		}
+		}
+		else {
+			return "/user/login.jsp";
+		}
 	}
 	
 }

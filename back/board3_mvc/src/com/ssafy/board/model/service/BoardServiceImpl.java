@@ -23,22 +23,27 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int writeArticle(BoardDto boardDto) throws Exception {
-		return 0;
+		return boardDao.writeArticle(boardDto);
 	}
 
 	@Override
 	public List<BoardDto> listArticle(Map<String, String> map) throws Exception {
-		return null;
+		int pgno = Integer.parseInt(map.get("pgno"));
+		int spl = SizeConstant.SIZE_PER_LIST;
+		int start = (pgno - 1) * spl;
+		map.put("start", start + "");
+		map.put("spl", spl + "");
+		return boardDao.listArticle(map);
 	}
 
 	@Override
 	public BoardDto getArticle(int articleNo) throws Exception {
-		return null;
+		return boardDao.getArticle(articleNo);
 	}
 
 	@Override
 	public void updateHit(int articleNo) throws Exception {
-		
+		boardDao.updateHit(articleNo);
 	}
 
 	@Override
@@ -48,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public void deleteArticle(int articleNo) throws Exception {
-		
+		boardDao.deleteArticle(articleNo);
 	}
 
 }

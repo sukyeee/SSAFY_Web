@@ -17,22 +17,25 @@ import board.service.LoginService;
 import board.service.LoginServiceImpl;
 
 
-@WebServlet("/login")
+@WebServlet({"/login", "/logout"})
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-
+    // logout
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 필요한 작업 수행( Log, 장바구니...DB 저장...) 후
+		HttpSession session = request.getSession();
+		session.invalidate();
+		
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("result", "success");
+		
+		String jsonStr = gson.toJson(jsonObject);
+		response.getWriter().write(jsonStr);
 
-//		Connection con = DBManager.getConnection();
-//		System.out.println(con);
-//		DBManager.releaseConnection(null, null, con);
-		
-		
-		doPost(request, response);
 	}
 
-
+	// login
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
