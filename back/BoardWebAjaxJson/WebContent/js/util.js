@@ -6,6 +6,11 @@ function makeDateStr(year, month, day, type){ // type + / . 2022/07/24 2022.11.2
 	return year + type + ( ( month < 10 ) ? '0' + month : month ) + type + ( ( day < 10 ) ? '0' + day : day );
 }
 
+function makeTimeStr(hour, minue, second, type){ // type + / . 2022/07/24 2022.11.24
+	return hour + type + ( ( minue < 10 ) ? '0' + minue : minue ) + type + ( ( second < 10 ) ? '0' + second : second );
+}
+
+
 function makePaginationHtml(listRowCount, pageLinkCount, currentPageIndex, totalListItemCount, htmlTargetId){
 
 	var targetUI = document.querySelector("#" + htmlTargetId);

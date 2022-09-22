@@ -117,7 +117,7 @@
 							<label for="contentInsert" class="form-label">내용</label>
 							<textarea class="form-control" id="contentInsert" rows="10"></textarea>
 						</div>
-						<button id="btnBoardInsert" type="button" class="btn btn-outline-primary float-end">등록</button>
+						<button id="btnBoardInsert" type="button" class="btn btn-sm btn-primary float-end">등록</button>
 				
 					</form>
 				</div>
@@ -150,9 +150,9 @@
 	                </tbody>
            		 </table>
            		 
-           		 <button id="btnBoardUpdateForm" type="button" class="btn btn-sm btn-outline-primary float-end">글 수정하기</button>
-           		 <button id="btnBoardDeleteConfirm" type="button" class="btn btn-sm btn-outline-warning float-end">글 삭제하기</button>
-           		 <button id="btnBoardUpdateComplete" type="button" class="btn btn-sm btn-outline-primary float-end" style="display:none">수정 완료</button>
+           		 <button id="btnBoardUpdateForm" type="button" class="btn btn-sm btn-primary float-end">수정</button>
+           		 <button id="btnBoardDeleteConfirm" type="button" class="btn btn-sm btn-warning float-end">삭제</button>
+           		 <button id="btnBoardUpdateComplete" type="button" class="btn btn-sm btn-primary float-end" style="display:none">수정 완료</button>
            		 
 				</div>
 			
@@ -325,7 +325,9 @@
 			let title = detail.title;
 			let content = detail.content;
 			let regDt = detail.regDt;
-			let regDtStr = makeDateStr(regDt.date.year, regDt.date.month, regDt.date.day, '.');
+			let regDtStr = 
+				makeDateStr(regDt.date.year, regDt.date.month, regDt.date.day, '/') + ' ' + 
+				makeTimeStr(regDt.time.hour, regDt.time.minute, regDt.time.second, ':');
 			let readCount = detail.readCount;
 			let sameUser = detail.sameUser;
  	   	
@@ -353,7 +355,7 @@
 			// delete
 			document.querySelector("#btnBoardDeleteConfirm").onclick = function() {
 				boardDelete(boardId);
-			
+				boardList();
 			};
 			
 			// update
@@ -374,6 +376,7 @@
 				 content = document.querySelector("#contentInput").value;	
 				
 				boardUpdate(boardId, title, content );
+				boardList();
 				};
 				
 			};
@@ -419,14 +422,22 @@
                   method: "POST",
                   body: urlParams
               }
-  
-              let response = await fetch( "<%= contextPath%>/board/boardInsert", fetchOptions );
-              let data = await response.json(); // json => javascript object <= JSON.parse()
-              if( data.result == "success" ){ // login.jsp => boardMain.jsp로 페이지 이동 ( 새로운 페이지(html....) 요청)
-            	  alertify.success("글이 등록되었습니다.")
-              }else if( data.result == "fail" ){
-                  alertify.error('글 등록 과정에서 오류가 발생했습니다.');
-              }
+              
+              let url = "<%= contextPath%>/board/boardInsert";
+  				try{
+  				   let response = await fetch( url , fetchOptions );
+  	              let data = await response.json(); // json => javascript object <= JSON.parse()
+  	              if( data.result == "success" ){ // login.jsp => boardMain.jsp로 페이지 이동 ( 새로운 페이지(html....) 요청)
+  	            	  alertify.success("글이 등록되었습니다.")
+  	            	  boardList();
+  	              }else if( data.result == "fail" ){
+  	                  alertify.error('글 등록 과정에서 오류가 발생했습니다.');
+  	              }
+  				} catch(error){
+                    alertify.error('글 등록 과정에서 오류가 발생했습니다.');
+
+  				}
+           
         }
         
         // delete

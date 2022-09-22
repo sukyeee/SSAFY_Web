@@ -20,6 +20,15 @@ public class BoardServiceImpl implements BoardService{
 		return dao.boardInsert(dto);
 	}
 	@Override
+	public int boardDelete(int boardId) {
+		return dao.boardDelete(boardId);
+	}
+	@Override
+	public int boardUpdate(BoardDto dto) {
+		return dao.boardUpdate(dto);
+	}
+
+	@Override
 	public List<BoardDto> boardList(int limit, int offset) {
 		return dao.boardList(limit, offset);
 	}
@@ -46,14 +55,6 @@ public class BoardServiceImpl implements BoardService{
 			boardDto.setSameUser(false);
 		}
 		return boardDto;
-	}
-	@Override
-	public int boardDelete(int boardId, int userSeq) {
-		return dao.boardDelete(boardId);
-	}
-	@Override
-	public int boardUpdate(BoardDto dto, int userSeq) {
-		return dao.boardUpdate(dto);
 	}
 
 

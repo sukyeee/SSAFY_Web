@@ -49,6 +49,70 @@ public class BoardDaoImpl implements BoardDao {
 
 		return ret;
 	}
+	
+	@Override
+	public int boardUpdate(BoardDto dto) {
+		
+		BoardDto boardDto = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ret = -1;
+		
+		try {
+			con = DBManager.getConnection();
+			StringBuilder sb = new StringBuilder();
+			sb.append( "UPDATE BOARD SET title = ?, content = ? WHERE board_id = ?"  );
+		
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getContent());
+			pstmt.setInt(3, dto.getBoardId());
+			
+			
+			ret = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.releaseConnection(rs, pstmt, con);
+		}
+
+		return ret;
+	
+	}
+	
+	
+	@Override
+	public int boardDelete(int boardId) {
+	
+		BoardDto boardDto = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ret = -1;
+		
+		try {
+			con = DBManager.getConnection();
+			StringBuilder sb = new StringBuilder();
+			sb.append( " delete from BOARD where board_id = ? " );
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, boardId);
+			
+			ret = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.releaseConnection(rs, pstmt, con);
+		}
+
+		return ret;
+	}
+
+
 
 	@Override
 	public List<BoardDto> boardList(int limit, int offset) {
@@ -236,63 +300,5 @@ public class BoardDaoImpl implements BoardDao {
 		return boardDto;
 	}
 
-	@Override
-	public int boardDelete(int boardId) {
-	
-		BoardDto boardDto = null;
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int ret = -1;
-		
-		try {
-			con = DBManager.getConnection();
-			StringBuilder sb = new StringBuilder();
-			sb.append( " delete from board where board_id = ? " );
-			pstmt = con.prepareStatement(sb.toString());
-			pstmt.setInt(1, boardId);
-			
-			ret = pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.releaseConnection(rs, pstmt, con);
-		}
-
-		return ret;
-	}
-
-	@Override
-	public int boardUpdate(BoardDto dto) {
-		
-		BoardDto boardDto = null;
-
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int ret = -1;
-		
-		try {
-			con = DBManager.getConnection();
-			StringBuilder sb = new StringBuilder();
-			sb.append( "UPDATE board SET title = ?, content = ? WHERE board_id = ?"  );
-			pstmt = con.prepareStatement(sb.toString());
-			pstmt.setString(1, dto.getTitle());
-			pstmt.setString(2, dto.getContent());
-			pstmt.setInt(3, dto.getBoardId());
-			
-			
-			ret = pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.releaseConnection(rs, pstmt, con);
-		}
-
-		return ret;
-	
-	}
 }

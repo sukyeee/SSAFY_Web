@@ -50,7 +50,6 @@ public class BoardServlet extends HttpServlet {
 		case "/board/boardMain":
 			boardMain(request, response);
 			break;
-
 		case "/board/boardList":
 			boardList(request, response);
 			break;
@@ -76,69 +75,7 @@ public class BoardServlet extends HttpServlet {
 	}
 
 	
-	private void boardUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-		String strBoardId = request.getParameter("boardId");
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		
-		int boardId = Integer.parseInt(strBoardId);
-		
-		System.out.println(title);
-		System.out.println(content);
-
-		BoardDto boardDto = new BoardDto();
-		boardDto.setBoardId(boardId);
-		boardDto.setTitle(title);
-		boardDto.setContent(content);
-		
-		HttpSession session = request.getSession();
-		UserDto userDto = (UserDto) session.getAttribute("userDto");
-		int userSeq = userDto.getUserSeq();
-
-		int ret = service.boardUpdate(boardDto, userSeq);
-
-		
-		Gson gson = new Gson();
-		JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty("result", "success");
-
-		if (ret == 1) {
-			jsonObject.addProperty("result", "success");
-		} else {
-			jsonObject.addProperty("result", "fail");
-		}
-		
-		String jsonStr = gson.toJson(jsonObject);
-		response.getWriter().write(jsonStr);
-		
-	}
-
-	private void boardDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-		String strBoardId = request.getParameter("boardId");
-		int boardId = Integer.parseInt(strBoardId);
-
-		HttpSession session = request.getSession();
-		UserDto userDto = (UserDto) session.getAttribute("userDto");
-		int userSeq = userDto.getUserSeq();
-
-		int ret = service.boardDelete(boardId, userSeq);
-
-		Gson gson = new Gson();
-		JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty("result", "success");
-
-		if (ret == 1) {
-			jsonObject.addProperty("result", "success");
-		} else {
-			jsonObject.addProperty("result", "fail");
-		}
-		
-		String jsonStr = gson.toJson(jsonObject);
-		response.getWriter().write(jsonStr);
-		
-	}
+	
 
 	private void boardMain(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -238,8 +175,7 @@ public class BoardServlet extends HttpServlet {
 
 		Gson gson = new Gson();
 		JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty("result", "success");
-
+	
 		if (ret == 1) {
 			jsonObject.addProperty("result", "success");
 		} else {
@@ -249,4 +185,56 @@ public class BoardServlet extends HttpServlet {
 		String jsonStr = gson.toJson(jsonObject);
 		response.getWriter().write(jsonStr);
 	}
+	
+private void boardUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");	
+		int boardId = Integer.parseInt(request.getParameter("boardId"));
+		
+		BoardDto boardDto = new BoardDto();
+		boardDto.setBoardId(boardId);
+		boardDto.setTitle(title);
+		boardDto.setContent(content);
+		
+		HttpSession session = request.getSession();
+		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		int userSeq = userDto.getUserSeq();
+
+		int ret = service.boardUpdate(boardDto);
+
+		
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+
+		if (ret == 1) {
+			jsonObject.addProperty("result", "success");
+		} else {
+			jsonObject.addProperty("result", "fail");
+		}
+		
+		String jsonStr = gson.toJson(jsonObject);
+		response.getWriter().write(jsonStr);
+		
+	}
+
+	private void boardDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		int boardId = Integer.parseInt(request.getParameter("boardId"));
+		int ret = service.boardDelete(boardId);
+
+		Gson gson = new Gson();
+		JsonObject jsonObject = new JsonObject();
+
+		if (ret == 1) {
+			jsonObject.addProperty("result", "success");
+		} else {
+			jsonObject.addProperty("result", "fail");
+		}
+		
+		String jsonStr = gson.toJson(jsonObject);
+		response.getWriter().write(jsonStr);
+		
+	}
+	
 }
