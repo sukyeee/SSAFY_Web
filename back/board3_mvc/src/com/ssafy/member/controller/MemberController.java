@@ -51,9 +51,7 @@ public class MemberController extends HttpServlet {
 		} else if("logout".equals(act)) {
 			path = logout(request, response);
 			forward(request, response, path);
-		}else {
-			redirect(request, response, path);
-		}
+		
 	}
 
 

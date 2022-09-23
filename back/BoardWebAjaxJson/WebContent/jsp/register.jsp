@@ -131,7 +131,7 @@
                 }
             }
 
-              // 길이가 4이상이면 valid
+              // 길이가 3이상이면 valid
              function validateUserName( userName ){
                     if( userName.length >= 3 ) return true;
                     else return false;
