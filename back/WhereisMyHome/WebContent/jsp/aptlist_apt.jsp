@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	String contextPath = request.getContextPath();
-%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,8 +17,26 @@
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 	crossorigin="anonymous"></script>
 <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=54ab79b2f09a0ef4ca2e0b896ef72a90"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=54ab79b2f09a0ef4ca2e0b896ef72a90&libraries=services,clusterer,drawing"></script>
 <link rel="stylesheet" href="css/aptlist.css" />
+<link rel="stylesheet" href="css/header.css" />
+
+<!-- JavaScript -->
+<script
+	src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<!-- Default theme -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+<!-- Semantic UI theme -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+<!-- Bootstrap theme -->
+<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
 
 <title>Document</title>
 </head>
@@ -34,36 +49,60 @@
 	<!-- 아파트 실거래가 조회 페이지 -->
 	<div class="container-fluid">
 
-
-
-		<nav class="navbar navbar-light bg-light">
-			<div id="nav_menu">
-				<button class="btn btn-sm btn-outline-secondary" type="button">login</button>
-				<button class="btn btn-sm btn-outline-secondary" type="button">register</button>
-			</div>
-		</nav>
-
+		<%@ include file="./header.jsp" %>
 
 		<main>
-		
-		
-				<form method="POST" action="<%=contextPath%>/findHouses">
-						 
-					<Input name="gugun" /> 
-					<Input name="dong" />
-					<button>test</button>
-				
-				</form>
-		
-		
+
+<!-- 	
+  		<form class="main-form" method="POST" action="<%=contextPath%>/findHouses">			 
+          <div class="main-form-input">
+              <Input name="dong" placeholder="동 검색"/> 
+              <Input name="aptName" placeholder="아파트 검색"/>
+          </div>
+          <button class="btn btn-light" id="searchBtn"> 🔍  </button>
+
+		  </form>
+ -->	
+	
+	       <div class="main-bottom">
+	          <div class="row col-md-12 justify-content-center mb-2">
+	            <div class="form-group col-md-2">
+	              <select class="form-select  main-button" id="sido">
+	                <option value="">시도선택</option>
+	                
+	              </select>
+	            </div>
+	            <div class="form-group col-md-2">
+	              <select class="form-select  main-button" id="gugun">
+	                <option value="">구군선택</option>
+	              </select>
+	            </div>
+	            <div class="form-group col-md-2">
+	              <select class="form-select  main-button" id="dong">
+	                <option value="">동선택</option>
+	              </select>
+	            </div>
+	            <div class="form-group col-md-2">
+	              
+	                <input type="search" placeholder="아파트 검색" id="searchInput" value=""></input>
+	            
+	            </div>
+	            <div class="form-group col-md-1">
+	              <button type="button" class="btn btn-light" id="list-btn">  <a href="aptlist_apt.jsp">🔍</a> </button>
+	            </div>
+	          </div>
+	          
+	     
+        </div>
+      
+      
 		</main>
-
-
 
 
 		<section>
 
 			<!-- 지도 -->
+			<!-- 
 			<div id="map">
 
 				<div class="list-group">
@@ -101,162 +140,353 @@
 				</div>
 
 			</div>
+			
+			 -->
+			<div class="map_wrap">
+			    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+			
+			    <div id="menu_wrap" class="bg_white">
+			        <div class="option">
+			            <div>
+			                <form onsubmit="searchPlaces(); return false;">
+			                    키워드 : <input type="text" value="아파트 검색" id="keyword" size="15"> 
+			                    <button type="submit">검색하기</button> 
+			                </form>
+			            </div>
+			        </div>
+			        <hr>
+			        <ul id="placesList"></ul>
+			        <div id="pagination"></div>
+			    </div>
+			</div>
 
 		</section>
-
-
-	</div>
-
-
-
-	<!-- 왼쪽 거래 정보 메뉴 -->
-
-
-
-
-	<!-- <table class="table table-striped table-hover" >
-        <tr>
-          <th>거래 정보</th>
-        </tr>
-        <tr>
-            <th>극동
-                <br>
-                거래금액
-            </th>
-        </tr>
-        <tbody id="aptlist"></tbody>
-    </table> -->
-
+	
+		<section id="section-aptlist">
+		
+		 <table class="table table-hover text-center aptlist" style="display: none">
+	        <tr>
+	          <th>아파트이름</th>
+	          <th>동</th>
+	          <th>거래금액</th>
+	          <th>면적</th>
+	          <th>거래일시</th>
+	        </tr>
+	        <tbody id="aptlist"></tbody>
+     	 </table>
+		
+		
+		</section>
 
 	</div>
 
 
 
-
 	<script>
-   var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-    mapOption = { 
-        center: new kakao.maps.LatLng(35.0953265, 128.8556681), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };
-
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
- 
-// 마커를 표시할 위치와 title 객체 배열입니다 
-var positions = [
-    {
-        title: '그린코아아파트', 
-        latlng: new kakao.maps.LatLng(35.095185,128.8558505)
-    },
-    {
-        title: '신호일천푸른마을아파트', 
-        latlng: new kakao.maps.LatLng(35.0957265, 128.8596681)
-    },
-    {
-        title: '아이유쉘아파트', 
-        latlng: new kakao.maps.LatLng(35.096295, 128.8576681)
-    },
-    {
-        title: '윌더하임',
-        latlng: new kakao.maps.LatLng(35.0933265, 128.8556681)
-    }
-];
-
-// 마커 이미지의 이미지 주소입니다
-var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-    
-for (var i = 0; i < positions.length; i ++) {
-    
-    // 마커 이미지의 이미지 크기 입니다
-    var imageSize = new kakao.maps.Size(24, 35); 
-    
-    // 마커 이미지를 생성합니다    
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-    
-    // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
-        map: map, // 마커를 표시할 지도
-        position: positions[i].latlng, // 마커를 표시할 위치
-        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        image : markerImage // 마커 이미지 
-    });
-
-    var iwContent = `<div class="marker-info" style="padding:5px;">${positions[i].title}</div>`, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    iwPosition = new kakao.maps.LatLng(33.450701, 126.570667); //인포윈도우 표시 위치입니다
-
-// 인포윈도우를 생성합니다
-var infowindow = new kakao.maps.InfoWindow({
-    position : iwPosition, 
-    content : iwContent 
-});
-  
-// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-infowindow.open(map, marker); 
-
-}
-
-
-</script>
-	<script>
-    window.onload = async () => {
-      // 공공데이터 api 부분 return text
-
-      const getData = async () => {
-      try {
-        const url =
-          "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?LAWD_CD=11110&DEAL_YMD=201512&serviceKey=l8mq0OCEjEDRDqtt8j2xS7kwK2OYgw6453AFkmdVkDF2YvF6LmHEEWCjZ2FnOrcnmipoquf7wccg21CEGTWVvA%3D%3D";
-        const response = await fetch(url);
-        return response.text();
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    
-    const getAddressData = async () => {
+	let DongData = null;
+	let AptData = null;
+    window.onload = function() {
     	
-    }
-
-    	
+     	 // 브라우저가 열리면 시도정보 얻기.
+        sido();
+     
+        // 리스트 버튼 (검색버튼) 클릭 
+        document.querySelector("#list-btn").addEventListener("click", function (e) {
+        	e.preventDefault();
+      		// db에서 동별, 아파트별 검색
+      		// ㅁㅁ시 ㅁㅁ구 ㅁㅁ동 검색 -> 해당 "동"의 코드에 해당하는 아파트 이름, 거래가격, 위치 등 다 불러오기
+      		let dong = document.querySelector("#dong");
+      		console.log(dong[dong.selectedIndex].innerHTML);
+      		let regcode = dong[dong.selectedIndex].innerHTML;
+      		
+      		console.log(document.querySelector("#searchInput").value)
+      		
+      		let inputValue = document.querySelector("#searchInput").value;
+      		if( inputValue != "" ){
+      			console.log('아파트 검색!');
+      			searchByApt(inputValue);
+      		}
+      		else {
+      			// 동별 검색
+          		searchByDong(regcode);
+      		}
+      		
+      		// 아파트별은 검색어 입력으로 찾기.
+        });
   
     };	
+	
 
+    // 시도가 바뀌면 구군정보 얻기.
+    document.querySelector("#sido").addEventListener("change", function () {
+      if (this[this.selectedIndex].value) {
+        let regcode = this[this.selectedIndex].value; // 앞에있는 두자리가 시.도  (11:서울)
+		gugun(regcode);
+      } else {
+        initOption("gugun");
+        initOption("dong");
+      }
+    });
+
+    // 구군이 바뀌면 동정보 얻기.
+    document.querySelector("#gugun").addEventListener("change", function () {
+      if (this[this.selectedIndex].value) {
+        let regcode = this[this.selectedIndex].value; // 나머지 세자리는 구군 앞에 두자리는 시도 
+        dong(regcode);
+      } else {
+        initOption("dong");
+      }
+    });
+    
+    
+    async function sido() {
+		let url = '<%=contextPath%>/house/sido';
+  			//let urlParams = `?limit=${LIST_ROW_COUNT}&offset=${OFFSET}`; // jsp EL표기법과 javascript es6 literal template와 충돌.
+		let fetchOptions = {
+  					method: 'GET',
+  			}
+  			
+  			try {
+  				let response = await fetch( url , fetchOptions );
+  				let data = await response.json();
+  				console.log( data )
+  				
+  				addOption("sido", data)
+  				
+  			} catch( error ) {
+  				console.log(error);
+  				alertify.error('시도 조회 과정에서 문제가 생겼습니다.');
+  			}
+    }
+    
+    async function gugun(regcode) {
+		let url = '<%=contextPath%>/house/gugun?sido_code=' + regcode;
+  			//let urlParams = `?limit=${LIST_ROW_COUNT}&offset=${OFFSET}`; // jsp EL표기법과 javascript es6 literal template와 충돌.
+		let fetchOptions = {
+  					method: 'GET',
+  			}
+  			
+  			try {
+  				let response = await fetch( url , fetchOptions );
+  				let data = await response.json();
+  				console.log( data )
+  				
+  				addOption("gugun", data)
+  				
+  			} catch( error ) {
+  				console.log(error);
+  				alertify.error('시도 조회 과정에서 문제가 생겼습니다.');
+  			}
+    }
+    
+    async function dong(regcode) {
+		let url = '<%=contextPath%>/house/dong?gugun_code=' + regcode;
+  			//let urlParams = `?limit=${LIST_ROW_COUNT}&offset=${OFFSET}`; // jsp EL표기법과 javascript es6 literal template와 충돌.
+		let fetchOptions = {
+  					method: 'GET',
+  			}
+  			
+  			try {
+  				let response = await fetch( url , fetchOptions );
+  				let data = await response.json();
+  				console.log( data )
+  				
+  				addOption("dong", data)
+  				
+  			} catch( error ) {
+  				console.log(error);
+  				alertify.error('시도 조회 과정에서 문제가 생겼습니다.');
+  			}
+    }
+    
+    function initOption(selid) {
+    	let options = document.querySelector("#" + selid);
+        options.length = 0;
+      }
+    
+    function addOption(selid, data) {
+        let opt = ``;
+        initOption(selid);
+        switch (selid) {
+          case "sido":
+            opt += `<option value="">시도선택</option>`;
+            
+            data.forEach(function (regcode) {
+            
+            	
+            	opt += ` <option value=` + regcode.code + `>` + regcode.name + `</option> `;
+            });
+            break;
+            
+          case "gugun":
+            opt += `<option value="">구군선택</option>`;
+            
+            data.forEach(function (regcode) {
+            
+            	
+            	opt += ` <option value=` + regcode.code + `>` + regcode.name + `</option> `;
+            });
+            break;
+            
+          case "dong":
+            opt += `<option value="">동선택</option>`;
+            data.forEach(function (regcode) {
+            	
+            	
+            	opt += ` <option value=` + regcode.code + `>` + regcode.name + `</option> `;
+            });
+        }
+        document.querySelector("#" + selid).innerHTML = opt;
+      }
+    
+    
+    
+    // 동 별 검색
+    async function searchByDong(regcode) {
+    	
+    	let url = '<%=contextPath%>/house/search?dong_name=' + regcode;
+			//let urlParams = `?limit=${LIST_ROW_COUNT}&offset=${OFFSET}`; // jsp EL표기법과 javascript es6 literal template와 충돌.
+		let fetchOptions = {
+					method: 'GET',
+			}
+			
+			try {
+				let response = await fetch( url , fetchOptions );
+				let data = await response.json();
+				console.log( data )
+				sessionStorage.setItem("DongData", data);
+			
+				// 동 별 검색 테이블 만들기
+				makeList(data)
+				
+			} catch( error ) {
+				console.log(error);
+				alertify.error('시도 조회 과정에서 문제가 생겼습니다.');
+			}
+    	
+    }
+    
+    // 아파트 별 검색
+    async function searchByApt(regcode) {
+    	
+    	let url = '<%=contextPath%>/house/searchApt?apt_name=' + regcode;
+			//let urlParams = `?limit=${LIST_ROW_COUNT}&offset=${OFFSET}`; // jsp EL표기법과 javascript es6 literal template와 충돌.
+		let fetchOptions = {
+					method: 'GET',
+			}
+			
+			try {
+				let response = await fetch( url , fetchOptions );
+				let data = await response.json();
+				console.log( data )
+				sessionStorage.setItem("AptData", data);
+
+				// 아파트 별 검색 테이블 만들기
+				makeList(data)
+				
+			} catch( error ) {
+				console.log(error);
+				alertify.error('시도 조회 과정에서 문제가 생겼습니다.');
+			}
+    	
+    }
+    
+    
+    
     function makeList(data) {
-        // document.querySelector("table").setAttribute("style", "display: ;");
-        // let tbody = document.querySelector("#aptlist");
-        let parser = new DOMParser();
-        const xml = parser.parseFromString(data, "application/xml");
-        // console.log(xml);
+        document.querySelector("table").setAttribute("style", "display:  ;");
+        let tbody = document.querySelector("#aptlist");
+
         initTable();
-        let apts = xml.querySelectorAll("item");
-        apts.forEach((apt) => {
+        
+        data.forEach((apt) => {
+        	
+          // 아파트 이름
           let tr = document.createElement("tr");
-
-          let nameTd = document.createElement("td");
-          nameTd.appendChild(document.createTextNode(apt.querySelector("아파트").textContent));
+        	
+		  let nameTd = document.createElement("td");
+		  nameTd.appendChild(document.createTextNode(apt.AptName));
           tr.appendChild(nameTd);
-
-          let floorTd = document.createElement("td");
-          floorTd.appendChild(document.createTextNode(apt.querySelector("층").textContent));
-          tr.appendChild(floorTd);
-
-          let areaTd = document.createElement("td");
-          areaTd.appendChild(document.createTextNode(apt.querySelector("전용면적").textContent));
-          tr.appendChild(areaTd);
-
-          let dongTd = document.createElement("td");
-          dongTd.appendChild(document.createTextNode(apt.querySelector("법정동").textContent));
-          tr.appendChild(dongTd);
-
-          let priceTd = document.createElement("td");
-          priceTd.appendChild(
-            document.createTextNode(apt.querySelector("거래금액").textContent + "만원"),
-          );
-          priceTd.classList.add("text-end");
-          tr.appendChild(priceTd);
+        
+          // 동 주소
+          let dongName = document.createElement("td");
+          dongName.appendChild(document.createTextNode(apt.dong));
+          tr.appendChild(dongName);
+          
+          // 거래 금액
+          let dealAmount = document.createElement("td");
+          let dealStr = apt.dealAmount + "만원";
+          dealAmount.appendChild(document.createTextNode(dealStr) );
+          tr.appendChild(dealAmount);
+         
+          // 면적
+          let area = document.createElement("td");
+          area.appendChild(document.createTextNode(apt.area));
+          tr.appendChild(area);
+        
+          // 거래일시 
+          let dealDate = document.createElement("td");
+          let dateString = apt.dealYear +"."+ apt.dealMonth +"."+ apt.dealDay;
+          console.log(dateString)
+          dealDate.appendChild(document.createTextNode( dateString ) );
+          tr.appendChild(dealDate);
+         
 
           tbody.appendChild(tr);
         });
       }
-  </script>
+    
+    function initTable() {
+        let tbody = document.querySelector("#aptlist");
+        let len = tbody.rows.length;
+        for (let i = len - 1; i >= 0; i--) {
+          tbody.deleteRow(i);
+        }
+    }
+    
+    
+    //////////////////////////////////////////////////////////////////지도 출력
+ 
+		// 마커를 담을 배열입니다
+		var markers = [];
+		// DongDada
+		// AptData
+			
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };  
+		
+		// 지도를 생성합니다    
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+	// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+		var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+		
+		// 키워드 검색을 요청하는 함수입니다
+		function searchPlaces() {
+			
+		    var keyword = document.getElementById('keyword').value;
+		    searchByApt(keyword);
+			
+		    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+		        alert('키워드를 입력해주세요!');
+		        return false;
+		    }
+		    
+		    
+		    console.log("AptData"+  sessionStorage.getItem("AptData"))
+		   let AptData = sessionStorage.getItem("AptData")[0].dong;
+		   console.log(AptData)
+	
+		    
+		}
+		
+	
+		
+	
+</script>
+
 </body>
 </html>

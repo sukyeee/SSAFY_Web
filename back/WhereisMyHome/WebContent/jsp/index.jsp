@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%
-    String contextPath = request.getContextPath();
-%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,33 +36,7 @@
 </style>
 <body>
   <div class="container-fluid">
-  
-    <nav class="navbar navbar-light bg-light">
-      
-      <div id="login-modal" style="position: relative;">
-        <form>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="userEmail" aria-describedby="idHelp">
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="userPassword">
-          </div>
-          <button type="submit" class="btn btn-primary" id="btnLogin" onclick="loginBtnClick(event);">로그인</button>
-        </form>
-        <button class="btn btn-primary" style="position: absolute; bottom: 26px; right: 10px;"onclick="closeModal();">닫기</button>
-      </div>
-
-      <div id="nav_menu">
-        <button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="login-btn" onclick="showModal();">login</button>
-        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="logout-btn" onclick="logout()"><a href="<%= contextPath %>/logout?act=logout">logout</a></button>
-        
-        <button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="register-btn" ><a href="register.jsp">register</a></button>
-        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="mypage-btn" >  <a href="myPage.jsp"> Mypage </a> </button>
- 
-      </div>
-    </nav>
+  	<%@ include file="./header.jsp" %>
 
     <header>
         <div class="header-main">
@@ -117,7 +89,7 @@
                 <option value="">동선택</option>
               </select>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-1">
               <button type="button" class="btn btn-light" id="searchBtn">  <a href="aptlist_apt.jsp">🔍</a> </button>
             </div>
           </div>

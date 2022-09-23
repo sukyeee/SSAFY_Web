@@ -1,0 +1,45 @@
+* {
+    font-family: 'Nanum Gothic Coding', monospace;
+    box-sizing: border-box;
+  }
+  
+    nav {
+        display:flex;
+        justify-content:flex-end;
+    }
+    
+    #nav_menu {
+        margin-left: auto;
+        padding: 15px;
+        margin-right: 40px;
+    }
+    #nav_menu button a{
+      text-decoration: none;
+      color:inherit;
+    }
+     .show-btn{
+      display: inline;
+    }
+
+    .hide-btn{
+      display: none;
+    }
+    .register-btn a{
+      text-decoration: none;
+      color:inherit;
+    }
+    #login-modal{
+      display: none;
+      border: black solid 2px;
+      border-radius: 15px;
+      padding: 10px;
+      width: 400px;
+      height: 300px;
+      right: 100px;
+      top: 20px;
+      position: absolute;
+      z-index: 9999;
+      background-color: black;
+      color: white;
+    }
+ 

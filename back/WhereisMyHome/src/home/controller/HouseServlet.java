@@ -10,49 +10,128 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
+import home.dto.DongDto;
+import home.dto.GugunDto;
 import home.dto.HouseDto;
+import home.dto.SidoDto;
 import home.service.HouseService;
 import home.service.HouseServiceImpl;
 
-@WebServlet("/findHouses")
+@WebServlet("/house/*")
 public class HouseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	HouseService houseService = HouseServiceImpl.getInstance();
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-
-		// 파라미터
-		String dong = request.getParameter("dong");
-		String aptName = request.getParameter("aptName");
 		
-		System.out.println("dong : " + dong);
-		System.out.println("aptName : " + aptName);
 
-		HouseService service = HouseServiceImpl.getInstance();
-		List<HouseDto> houseList = service.findHouse(dong, aptName);
+		String contextPath = request.getContextPath();
+		String path = request.getRequestURI().substring(contextPath.length());
+		System.out.println(path);
 		
-		for (HouseDto houseDto : houseList) {
-			System.out.println("AptName : " + houseDto.getAptName());
+		switch (path) {
+		
+			case "/house/sido":
+				sido(request, response);
+				break;
+			case "/house/gugun":
+				gugun(request, response);
+				break;
+			case "/house/dong":
+				dong(request, response);
+				break;
+			case "/house/search":
+				searchByDong(request, response);
+				break;
+			case "/house/searchApt":
+				searchByApt(request, response);
+				break;
+			
+		
 		}
+		
+	
+	}
 
-		if (houseList.size() >= 1) {
-			Gson gson = new Gson();
-			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("result", "success");
+	private void searchByApt(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// 아파트 별 검색 
+		List<HouseDto> houseList = null;
 
-			String jsonStr = gson.toJson(jsonObject);
-			response.getWriter().write(jsonStr);
-		} else {
-			// "result" : "fail"
-			Gson gson = new Gson();
-			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("result", "fail");
+		String apt_name = request.getParameter("apt_name");
 
-			String jsonStr = gson.toJson(jsonObject);
-			response.getWriter().write(jsonStr);
-		}
+		houseList = houseService.getSearchByApt(apt_name);
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(houseList);
+		System.out.println(jsonStr);
+
+		response.getWriter().write(jsonStr);
+		
+		
+	}
+
+	private void searchByDong(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// 동 별 검색
+		List<HouseDto> houseList = null;
+
+		String dong_name = request.getParameter("dong_name");
+		
+		houseList = houseService.getSearchByDong(dong_name);
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(houseList);
+		System.out.println(jsonStr);
+
+		response.getWriter().write(jsonStr);
+	}
+
+	private void dong(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// 동 정보를 select
+		List<DongDto> dongList = null;
+
+		String gugun_code = request.getParameter("gugun_code");
+		
+		dongList = houseService.getDong(gugun_code);
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(dongList);
+		System.out.println(jsonStr);
+
+		response.getWriter().write(jsonStr);
+		
+	}
+
+	private void gugun(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// 구군 정보를 select
+		List<GugunDto> gugunList = null;
+
+		String sido_code = request.getParameter("sido_code");
+		
+		gugunList = houseService.getGugun(sido_code);
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(gugunList);
+		System.out.println(jsonStr);
+
+		response.getWriter().write(jsonStr);
+	}
+
+	private void sido(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// 시도 정보를 select
+	
+		List<SidoDto> sidoList = null;
+
+		sidoList = houseService.getSido();
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(sidoList);
+		System.out.println(jsonStr);
+
+		response.getWriter().write(jsonStr);
+		
 	}
 }

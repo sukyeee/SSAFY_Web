@@ -1,23 +1,12 @@
 * {
     font-family: 'Nanum Gothic Coding', monospace;
+    box-sizing: border-box;
   }
   .container-fluid {
         display: flex;
         flex-direction: column;
     }
-    
-
-    nav {
-        display:flex;
-        justify-content:flex-end;
-    }
-    
-    #nav_menu {
-        margin-left: auto;
-        padding: 15px;
-        margin-right: 40px;
-    }
- 
+   
     header {
       display:flex;
       position:relative;
@@ -84,9 +73,11 @@
     }
     
     .main-bottom{
+      display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 50px;
+      
       /* background-color: rgb(255, 250, 235); */
     }
     .main-button{
@@ -119,6 +110,7 @@
       
     }
 
+  
     footer {
       display: flex;
       flex-wrap: wrap;
@@ -209,31 +201,6 @@
     }
     .footer-card-content p{
       margin: 0px 5px 0px 5px;
-    }
-    .show-btn{
-      display: inline;
-    }
-
-    .hide-btn{
-      display: none;
-    }
-    .register-btn a{
-      text-decoration: none;
-      color:inherit;
-    }
-    #login-modal{
-      display: none;
-      border: black solid 2px;
-      border-radius: 15px;
-      padding: 10px;
-      width: 400px;
-      height: 300px;
-      right: 100px;
-      top: 20px;
-      position: absolute;
-      z-index: 9999;
-      background-color: black;
-      color: white;
     }
 
 	
