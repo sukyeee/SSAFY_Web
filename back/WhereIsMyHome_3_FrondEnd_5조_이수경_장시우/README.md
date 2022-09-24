@@ -40,8 +40,8 @@
 > ### 회원정보 수정 페이지
 > ![](./page/update.PNG)
 > ![](./page/update2.PNG)<br><br>
-> ![](./page/update3.png) <br>
 수정 완료 시 <br>
+> ![](./page/update3.png) <br>
 > ![](./page/update4.PNG) <br><br>
 탈퇴 완료 시 <br>
 > ![](./page/delete.PNG)
