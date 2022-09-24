@@ -39,10 +39,11 @@
 회원가입 완료 시 메인 페이지로 이동<br><br><br><br>
 > ### 회원정보 수정 페이지
 > ![](./page/update.PNG)
-> ![](./page/update2.PNG)
-> ![](./page/update3.png)
-> ![](./page/update4.PNG)
-<br><br>
+> ![](./page/update2.PNG)<br><br>
+> ![](./page/update3.png) <br>
+수정 완료 시 <br>
+> ![](./page/update4.PNG) <br><br>
+탈퇴 완료 시 <br>
 > ![](./page/delete.PNG)
 
 <br><br>
