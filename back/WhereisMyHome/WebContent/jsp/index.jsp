@@ -72,26 +72,13 @@
          </div>
         
         <div class="main-bottom">
-          <div class="row col-md-12 justify-content-center mb-2">
-            <div class="form-group col-md-2">
-              <select class="form-select  main-button" id="sido">
-                <option value="">시도선택</option>
-                
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <select class="form-select  main-button" id="gugun">
-                <option value="">구군선택</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <select class="form-select  main-button" id="dong">
-                <option value="">동선택</option>
-              </select>
-            </div>
-            <div class="form-group col-md-1">
-              <button type="button" class="btn btn-light" id="searchBtn">  <a href="aptlist_apt.jsp">🔍</a> </button>
-            </div>
+          <div class="row col-md-8 justify-content-center mb-2">
+     
+             <form class="d-flex">
+		      <input class="form-control me-2" id= "searchInputText" type="search" placeholder="아파트 검색" value="" aria-label="Search" >
+              <button type="button" class="btn btn-light" id="searchBtn" onclick="search()">  <a href="aptlist_apt.jsp">🔍</a> </button>
+		    </form>
+		    
           </div>
         </div>
       
@@ -250,8 +237,8 @@
 	    }
 	    
 	   	function search() {
-	   		
-	   		
+		     var keyword = document.querySelector("#searchInputText");
+			 sessionStorage.setItem("keyword", keyword);
 	   	}
 	    
 	    

@@ -11,6 +11,11 @@
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/header.css" />
 
 </head>
@@ -32,14 +37,24 @@
         <button class="btn btn-primary" style="position: absolute; bottom: 26px; right: 10px;"onclick="closeModal();">닫기</button>
       </div>
 
-      <div id="nav_menu">
-        <button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="login-btn" onclick="showModal();">login</button>
-        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="logout-btn" onclick="logout()"><a href="<%= contextPath %>/logout?act=logout">logout</a></button>
-        
-        <button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="register-btn" ><a href="register.jsp">register</a></button>
-        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="mypage-btn" >  <a href="myPage.jsp"> Mypage </a> </button>
+      <div id="nav-menu">
+			
+			<div id="nav-menu-left">
+		 		<button class="btn btn-sm btn-outline-secondary" id="homeBtn"><a href="./index.jsp">Home</a></button>
+			</div>
+  			<div id="nav-menu-right">
+	  			<button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="login-btn" onclick="showModal();">login</button>
+		        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="logout-btn" onclick="logout()"><a href="<%= contextPath %>/logout?act=logout">logout</a></button>
+		        
+		        <button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="register-btn" ><a href="register.jsp">register</a></button>
+		        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="mypage-btn" >  <a href="myPage.jsp"> Mypage </a> </button>
+  			</div>
+   	
+	   		
+   		</div>
+    	
+    	
  
-      </div>
     </nav>
     
     <script>
