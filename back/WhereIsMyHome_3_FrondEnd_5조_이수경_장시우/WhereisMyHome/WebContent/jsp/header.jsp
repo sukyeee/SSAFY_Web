@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ page import="home.dto.*" %> 
 <%
     String contextPath = request.getContextPath();
+	UserDto userDto = (UserDto)session.getAttribute("userDto");
 %>
 
 <!DOCTYPE html>
@@ -43,11 +44,13 @@
 		 		<button class="btn btn-sm btn-outline-secondary" id="homeBtn"><a href="./index.jsp">Home</a></button>
 			</div>
   			<div id="nav-menu-right">
-	  			<button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="login-btn" onclick="showModal();">login</button>
-		        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="logout-btn" onclick="logout()"><a href="<%= contextPath %>/user/userLogout?act=logout" >logout</a></button>
-		        
-		        <button class="btn btn-sm btn-outline-secondary show-btn" type="button" id="register-btn" ><a href="register.jsp">register</a></button>
-		        <button class="btn btn-sm btn-outline-secondary hide-btn" type="button" id="mypage-btn" >  <a href="myPage.jsp"> Mypage </a> </button>
+  				<% if( userDto == null) { %>
+	  			<button class="btn btn-sm btn-outline-secondary" type="button" id="login-btn" onclick="showModal();">login</button>
+		       	<button class="btn btn-sm btn-outline-secondary" type="button" id="register-btn" ><a href="../user/registerForm">register</a></button>
+		        <% } else { %>
+		        <button class="btn btn-sm btn-outline-secondary" type="button" id="logout-btn" ><a href="<%= contextPath %>/user/userLogout?act=logout" >logout</a></button>
+		        <button class="btn btn-sm btn-outline-secondary" type="button" id="mypage-btn" >  <a href="myPage.jsp"> Mypage </a> </button>
+  				<% } %>
   			</div>
    	
 	   		
@@ -127,20 +130,7 @@
 	      if( data.result == "success" ){ // login.jsp => boardMain.jsp로 페이지 이동 ( 새로운 페이지(html....) 요청)
 	          closeModal();
 	      		
-	      	document.querySelector("#login-btn").classList.remove("show-btn");
-	      	document.querySelector("#login-btn").classList.add("hide-btn");
-	      	
-	      	document.querySelector("#logout-btn").classList.remove("hide-btn");
-	      	document.querySelector("#logout-btn").classList.add("show-btn");
-
-	      	document.querySelector("#register-btn").classList.remove("show-btn");
-	      	document.querySelector("#register-btn").classList.add("hide-btn");
-
-	      	
-	      	document.querySelector("#mypage-btn").classList.remove("hide-btn");
-	      	document.querySelector("#mypage-btn").classList.add("show-btn");
-
-	      	
+	      	window.location.reload();
 	      	
 	      }else if( data.result == "fail" ){
 	          alertify.error('다시');
@@ -158,23 +148,7 @@
 	      console.log("closed");
 	    }
 	
-	    function logout() {
 	
-	      // alert("정상적으로 로그아웃 되었습니다.");
-	
-	      var loginBtn = document.querySelector("#login-btn");
-	      var logoutBtn = document.querySelector("#logout-btn");
-	
-	      loginBtn.classList.remove("hide-btn");
-	      loginBtn.classList.add("show-btn");
-	
-	      logoutBtn.classList.remove("show-btn");
-	      logoutBtn.classList.add("hide-btn");
-	      
-	      document.querySelector("#mypage-btn").classList.remove("show-btn");
-	  	  document.querySelector("#mypage-btn").classList.add("hide-btn");
-
-	    }
     
     </script>
 </body>

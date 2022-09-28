@@ -10,8 +10,15 @@ public class UserDto {
     private String userEmail;
     private String userProfileImageUrl;
     private Date userRegisterDate;
+    private String userClsf;
 
-    public int getUserSeq() {
+    public String getUserClsf() {
+		return userClsf;
+	}
+	public void setUserClsf(String userClsf) {
+		this.userClsf = userClsf;
+	}
+	public int getUserSeq() {
         return userSeq;
     }
     public void setUserSeq(int userSeq) {
@@ -56,8 +63,9 @@ public class UserDto {
 	public String toString() {
 		return "UserDto [userSeq=" + userSeq + ", userName=" + userName + ", userPassword=" + userPassword
 				+ ", userEmail=" + userEmail + ", userProfileImageUrl=" + userProfileImageUrl + ", userRegisterDate="
-				+ userRegisterDate + "]";
+				+ userRegisterDate + ", userClsf=" + userClsf + "]";
 	}
+	
     
     
 }

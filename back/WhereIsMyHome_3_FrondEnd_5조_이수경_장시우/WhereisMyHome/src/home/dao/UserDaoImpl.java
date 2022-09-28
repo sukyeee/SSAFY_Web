@@ -32,13 +32,14 @@ public class UserDaoImpl  implements UserDao{
 			con = DBManager.getConnection();
 			StringBuilder sb = new StringBuilder();
 			sb.append(" insert into users ")
-			.append(" (user_name, user_password, user_email, user_profile_image_url, user_register_date) ")
-			.append(" values (?,?,?, null, now())  ");
+			.append(" (user_name, user_password, user_email, user_profile_image_url, user_register_date, user_clsf) ")
+			.append(" values (?,?,?, null, now(), ?)  ");
 			
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, userDto.getUserName());
 			pstmt.setString(2, userDto.getUserPassword());
 			pstmt.setString(3, userDto.getUserEmail());
+			pstmt.setString(4, userDto.getUserClsf());
 			
 			ret = pstmt.executeUpdate(); // 영향받은 row 수 return
 			
@@ -64,7 +65,7 @@ public class UserDaoImpl  implements UserDao{
 			// Connection 객체 획득
 			con = DBManager.getConnection();
 			StringBuilder sb = new StringBuilder();
-			sb.append(" SELECT USER_SEQ, USER_NAME, USER_PASSWORD, USER_EMAIL, USER_PROFILE_IMAGE_URL, USER_REGISTER_DATE ")
+			sb.append(" SELECT USER_SEQ, USER_NAME, USER_PASSWORD, USER_EMAIL, USER_PROFILE_IMAGE_URL, USER_REGISTER_DATE, USER_CLSF ")
 				.append(" FROM USERS WHERE USER_EMAIL = ?" );
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, userEmail);
@@ -79,6 +80,7 @@ public class UserDaoImpl  implements UserDao{
 				userDto.setUserEmail(rs.getString("USER_EMAIL"));
 				userDto.setUserProfileImageUrl(rs.getString("USER_PROFILE_IMAGE_URL"));
 				userDto.setUserRegisterDate(rs.getDate("USER_REGISTER_DATE"));
+				userDto.setUserClsf(rs.getString("USER_CLSF"));
 			}
 			
 		} catch(Exception e) {

@@ -173,6 +173,8 @@ public class UserServlet extends HttpServlet {
 		if (userDto != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("userDto", userDto);
+			
+			System.out.println("세션의 Dto :" + session.getAttribute("userDto"));
 			// "result" : "success"
 			Gson gson = new Gson();
 			JsonObject jsonObject = new JsonObject();

@@ -1,7 +1,9 @@
 package home.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +14,11 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import home.dto.CodeDto;
+import home.dto.HouseDto;
 import home.dto.UserDto;
+import home.service.CodeService;
+import home.service.CodeServiceImpl;
 import home.service.UserService;
 import home.service.UserServiceImpl;
 
@@ -21,7 +27,8 @@ public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	UserService userService = UserServiceImpl.getInstance();
-
+	CodeService codeService = CodeServiceImpl.getInstance();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
@@ -51,18 +58,35 @@ public class UserServlet extends HttpServlet {
 				break;
 				
 			case "/user/userDelete":
-				System.out.println("....////" );
 				userDelete(request, response);
 				break;
 			
 			case "/user/userUpdate":
 				userUpdate(request, response);
 				break;
+				
+			case "/user/registerForm":
+				getCommon(request, response);
+				break;
+			
 		
 		}
 		
 		
 	
+	}
+
+	private void getCommon(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		List<CodeDto> codeList = null;
+
+		codeList = codeService.getCodeList();
+		request.setAttribute("codeList", codeList);
+
+		System.out.println( "111" );
+		RequestDispatcher dispatcher = request.getRequestDispatcher("../jsp/register.jsp");
+		dispatcher.forward(request, response);
+		
 	}
 
 	private void userLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -149,6 +173,8 @@ public class UserServlet extends HttpServlet {
 		if (userDto != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("userDto", userDto);
+			
+			System.out.println("세션의 Dto :" + session.getAttribute("userDto"));
 			// "result" : "success"
 			Gson gson = new Gson();
 			JsonObject jsonObject = new JsonObject();
@@ -177,11 +203,15 @@ public class UserServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String userEmail = request.getParameter("userEmail");
 		String userPassword = request.getParameter("userPassword");
-
+		String userClsf = request.getParameter("userClsf");
+		
+		
+		System.out.println(userClsf);
 		UserDto userDto = new UserDto();
 		userDto.setUserName(userName);
 		userDto.setUserEmail(userEmail);
 		userDto.setUserPassword(userPassword);
+		userDto.setUserClsf(userClsf);
 
 		int ret = userService.userRegister(userDto);
 

@@ -65,7 +65,7 @@ public class UserDaoImpl  implements UserDao{
 			// Connection 객체 획득
 			con = DBManager.getConnection();
 			StringBuilder sb = new StringBuilder();
-			sb.append(" SELECT USER_SEQ, USER_NAME, USER_PASSWORD, USER_EMAIL, USER_PROFILE_IMAGE_URL, USER_REGISTER_DATE ")
+			sb.append(" SELECT USER_SEQ, USER_NAME, USER_PASSWORD, USER_EMAIL, USER_PROFILE_IMAGE_URL, USER_REGISTER_DATE, USER_CLSF ")
 				.append(" FROM USERS WHERE USER_EMAIL = ?" );
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setString(1, userEmail);
@@ -80,6 +80,7 @@ public class UserDaoImpl  implements UserDao{
 				userDto.setUserEmail(rs.getString("USER_EMAIL"));
 				userDto.setUserProfileImageUrl(rs.getString("USER_PROFILE_IMAGE_URL"));
 				userDto.setUserRegisterDate(rs.getDate("USER_REGISTER_DATE"));
+				userDto.setUserClsf(rs.getString("USER_CLSF"));
 			}
 			
 		} catch(Exception e) {

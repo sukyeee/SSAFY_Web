@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="home.dto.*" %>
+<%@ page import="java.util.*" %>
 <%
     String contextPath = request.getContextPath();
+	// List<Hospital> hospitalList = (List<Hospital>) request.getAttribute("hospital");
+	List<CodeDto> codeList = (List<CodeDto>) request.getAttribute("codeList");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,14 +57,17 @@
             </div>
             
             <div class="col-12">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                  약관에 동의합니다.
-                </label>
-              </div>
-              
-            </div>
+        
+		 	<div class="form-check form-check-inline">
+			  <input class="form-check-input" type="radio" name="userClsf" id="inlineRadio1" value=<%= codeList.get(0).getCode() %>>
+			  <label class="form-check-label" for="inlineRadio1"><%= codeList.get(0).getCodeName() %></label>
+			</div>
+			<div class="form-check form-check-inline">
+			  <input class="form-check-input" type="radio" name="userClsf" id="inlineRadio2" value=<%= codeList.get(1).getCode() %>>
+			  <label class="form-check-label" for="inlineRadio2"><%= codeList.get(1).getCodeName() %></label>
+			</div>
+			<br>
+            
             <div class="col-12">
               <button type="submit" id="btnRegister" class="btn btn-primary">회원가입</button>
             </div>
@@ -69,6 +76,9 @@
     
     <script>
     window.onload = function() {
+    	
+    	
+    	
 
     	   document.querySelector("#btnRegister").onclick = function(e) {
     			
@@ -156,12 +166,21 @@
        		let userName = document.querySelector("#userName").value;
             let userEmail = document.querySelector("#userEmail").value;
             let userPassword = document.querySelector("#userPassword").value;
-
+			let userClsfList = document.getElementsByName("userClsf");
+			
+			let userClsf = null;
+			userClsfList.forEach((node) => {
+				if(node.checked){
+					userClsf = node.value;
+				}
+			})
+			
             // parameter
             let urlParams = new URLSearchParams({
             	userName : userName,
             	userEmail : userEmail,
-                userPassword: userPassword
+                userPassword: userPassword,
+                userClsf: userClsf,
              
             });
             // fetch options
