@@ -7,6 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<%
+	// import 필요 
+		List<CodeDto> codeList = (List<CodeDto>) request.getAttribute("codeList");
+	%>
+	
+	
+	<%-- codeList 반복문 
+	
+		for( codeDto : codeList ) {
+	--%> 
+	<input type="radio" value=<%=codeDto.getCode() %>><%= codeDto.getCodeName() %> 
 </body>
 </html>
