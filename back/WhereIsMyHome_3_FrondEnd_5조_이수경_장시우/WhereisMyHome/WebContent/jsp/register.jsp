@@ -55,7 +55,7 @@
 			   <div class="valid-feedback">좋은 비밀번호네요!</div>  
           	   <div class="invalid-feedback">1개 이상 특수 문자, 영문, 숫자를 포함하고 길이는 8이상이어야 합니다.</div>  
             </div>
-            
+      
             <div class="col-12">
         
 		 	<div class="form-check form-check-inline">
@@ -67,7 +67,7 @@
 			  <label class="form-check-label" for="inlineRadio2"><%= codeList.get(1).getCodeName() %></label>
 			</div>
 			<br>
-            
+            <br>
             <div class="col-12">
               <button type="submit" id="btnRegister" class="btn btn-primary">회원가입</button>
             </div>

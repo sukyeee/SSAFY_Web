@@ -26,18 +26,29 @@
 > ###  동별 검색 
 > ![](./page/searchByDong.png)
 > ### 아파트별 검색
-> ![](./page/searchByApt.png)
+> ![](./page/searchByApt.png) <br><br>
+> ## 공통 코드
+> 회원 가입시 회원 코드 001인 사람만 병원 정보 조회 가능
 > ### 병원 정보 조회
 > ![](./page/hospital.PNG)
 
 <br><br>
 > # 3. 회원관리 페이지
-> ### 회원가입 
-> ![회원관리 페이지](./page/register.png)
-> ![](./page/register2.PNG)
-> ![](./page/register3.PNG)
+> ### 회원가입 <br>
+> 19세 이상 회원 등록
+> ![회원관리 페이지](./page/register.png) <br>
+> 19세 미만 회원 등록
+> ![](./page/register1.PNG) <br>
+등록 완료 - 19세 이상 회원 코드 001, 19세 미만 회원 코드 002 
+> ![](./page/register_result.PNG) <br><br>
+회원가입 실패 시 
+> ![](./page/register2.PNG) <br>
+회원가입 성공시 
+> ![](./page/register3.PNG) <br>
+회원가입 완료 시 메인 페이지로 이동
 > ![](./page/register4.PNG)
-회원가입 완료 시 메인 페이지로 이동<br><br><br><br>
+
+<br><br><br><br>
 > ### 회원정보 수정 페이지
 > ![](./page/update.PNG)
 > ![](./page/update2.PNG)<br><br>
