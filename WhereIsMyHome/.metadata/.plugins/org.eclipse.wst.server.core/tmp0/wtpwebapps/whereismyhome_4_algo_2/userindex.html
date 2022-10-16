@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>구해줘 홈즈</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./style.css" type="text/css" />
+  </head>
+  <body>
+    <!-- 상단 navbar start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+      <div class="container">
+        <a class="navbar-brand text-primary fw-bold" href="index.html">
+          구해줘 홈즈
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-lg-0">
+          </ul>
+          <!-- 로그인 전 -->
+          <ul class="navbar-nav mb-2 me-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="allPrice.html">전체 거래 기록</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="apartPrice.html">아파트 거래 기록</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="addressPrice.html">동별 건물 거래</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="join.html">회원가입</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="login.html">로그인</a>
+            </li>
+          </ul>
+          <!-- 로그인 후 -->
+          <ul class="navbar-nav mb-2 me-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">로그아웃</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="info.html">마이페이지</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                관리자
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="userinfo.html">회원관리</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <hr>
+    <hr>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=38c01a7595acefb3baa681531cd36c4c"
+    ></script>
+    <div id="map" style="width: 100%; height: 400px"></div>
+    <script>
+      var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      var options = {
+        //지도를 생성할 때 필요한 기본 옵션
+        center: new kakao.maps.LatLng(37.574516, 126.968867), //지도의 중심좌표.
+        level: 6, //지도의 레벨(확대, 축소 정도)
+      };
+
+      var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+      var positions = [
+    {
+        title: '광화문스페이스본(101동~105동)', 
+        latlng: new kakao.maps.LatLng(37.574516, 126.968867)
+    },
+    {
+        title: '롯데미도파광화문빌딩', 
+        latlng: new kakao.maps.LatLng(37.5715, 126.9737)
+    },
+    {
+        title: '경희궁의아침2단지', 
+        latlng: new kakao.maps.LatLng(37.574, 126.971)
+    },
+    {
+        title: '경희궁파크팰리스', 
+        latlng: new kakao.maps.LatLng(37.5742, 126.9705)
+    },
+    {
+        title: '이화에수풀', 
+        latlng: new kakao.maps.LatLng( 37.5754, 127.0018)
+    },
+    {
+        title: '아남1', 
+        latlng: new kakao.maps.LatLng(37.5754, 127.0018)
+    },
+    {
+        title: '창신이수', 
+        latlng: new kakao.maps.LatLng(37.5782, 127.0145)
+    },
+    {
+        title: '동대문아파트', 
+        latlng: new kakao.maps.LatLng(37.5722, 127.0151)
+    },
+];
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+}
+    </script>
+<br>
+    <div class="mt-3">
+      <h4>[ 최근 판매 ]</h4>
+    </div>
+    <div class="row mt-1">
+      <div class="card col-md-3">
+        <img
+          src="./img/롯데미도파.PNG"
+          class="card-img-top w-50 mx-auto mt-3"
+          alt="파이썬"
+        />
+        <div class="card-body text-center">
+          <h6 class="card-title">롯데미도파광화문빌딩</h6>
+          <p class="card-text">(82,500)</p>
+          
+          <a href="#" class="btn btn-outline-primary btn-sm">자세히 알아보기</a>
+        </div>
+      </div>
+      <div class="card col-md-3">
+        <img
+          src="./img/경희궁의아침2단지.PNG"
+          class="card-img-top w-50 mx-auto mt-3"
+          alt="HTML5"
+        />
+        <div class="card-body text-center">
+          <h6 class="card-title">경희궁의아침2단지</h6>
+          <p class="card-text">(105,000)</p>
+          
+          <a href="#" class="btn btn-outline-primary btn-sm">자세히 알아보기</a>
+        </div>
+      </div>
+      <div class="card col-md-3">
+        <img
+          src="./img/파크팰리스.PNG"
+          class="card-img-top w-50 mx-auto mt-3"
+          alt="vuejs"
+        />
+        <div class="card-body text-center">
+          <h6 class="card-title">경희궁파크팰리스</h6>
+          <p class="card-text">(120,000)</p>
+          
+          <a href="#" class="btn btn-outline-primary btn-sm">자세히 알아보기</a>
+        </div>
+      </div>
+      <div class="card col-md-3">
+        <img
+          src="./img/이화에수풀.PNG"
+          class="card-img-top w-50 mx-auto mt-3"
+          alt="java"
+        />
+        <div class="card-body text-center">
+          <h6 class="card-title">아남1</h6>
+          <p class="card-text">(44,000)</p>
+          
+          <a href="#" class="btn btn-outline-primary btn-sm">자세히 알아보기</a>
+        </div>
+      </div>
+      <div class="mt-3">
+        <h4>[ 최근 판매 ]</h4>
+      </div>
+      <div class="row mt-1">
+        <div class="card col-md-3">
+          <img
+            src="./img/스페이스본.PNG"
+            class="card-img-top w-50 mx-auto mt-3"
+          />
+          <div class="card-body text-center">
+            <h6 class="card-title">광화문스페이스본</h6>
+            <p class="card-text">(82500)</p>
+    
+            <a href="#" class="btn btn-outline-primary btn-sm">자세히 알아보기</a>
+          </div>
+        </div>
+        <div class="card col-md-3">
+          <img
+            src="./img/창신.PNG"
+            class="card-img-top w-50 mx-auto mt-3"
+            alt="HTML5"
+          />
+          <div class="card-body text-center">
+            <h6 class="card-title">창신</h6>
+            <p class="card-text">(39,000)</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">자세히 알아보기</a>
+          </div>
+        </div>
+        <div class="card col-md-3">
+          <img
+            src="./img/창신.PNG"
+            class="card-img-top w-50 mx-auto mt-3"
+            alt="vuejs"
+          />
+          <div class="card-body text-center">
+            <h6 class="card-title">창신이수</h6>
+            <p class="card-text">(39,900)</p>
+            
+            <a href="#" class="btn btn-outline-primary btn-sm">자세히 알아보기</a>
+          </div>
+        </div>
+        <div class="card col-md-3">
+          <img
+            src="./img/동대문.PNG"
+            class="card-img-top w-50 mx-auto mt-3"
+            alt="java"
+          />
+          <div class="card-body text-center">
+            <h6 class="card-title">동대문 아파트 <span class="badge bg-secondary">New</span></h6>
+            <p class="card-text">(20,800)</p>
+            <a href="#" class="btn btn-outline-primary btn-sm">자세히 알아보기</a>
+          </div>
+        </div>
+  
+        <footer class="navbar navbar-expand-lg navbar-light bg-light container justify-content-end">
+          <div class="row">
+            <ul class="navbar-nav">
+              <li><a href="#" class="nav-link text-secondary">사이트 소개</a></li>
+              <li><a href="#" class="nav-link text-secondary">개인정보처리방침</a></li>
+              <li><a href="#" class="nav-link text-secondary">이용약관</a></li>
+              <li><a href="#" class="nav-link text-secondary">오시는길</a></li>
+              <li><label class="nav-link text-secondary">&copy; SaveHomes Corp.</label></li>
+            </ul>
+          </div>
+        </footer>
+      
+      
+    </div>
+  </body>
+</html>

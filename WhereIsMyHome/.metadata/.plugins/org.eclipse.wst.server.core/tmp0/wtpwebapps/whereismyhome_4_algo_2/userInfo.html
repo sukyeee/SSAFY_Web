@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>userInfo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./style.css" type="text/css" />
+  </head>
+  <body>
+    <!-- 상단 navbar start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+      <div class="container">
+        <a class="navbar-brand text-primary fw-bold" href="index.html">
+          구해줘 홈즈
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-lg-0">
+          </ul>
+          <!-- 로그인 전 -->
+          <ul class="navbar-nav mb-2 me-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="allPrice.html">전체 거래 기록</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="apartPrice.html">아파트 거래 기록</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="addressPrice.html">동별 건물 거래</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="join.html">회원가입</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="login.html">로그인</a>
+            </li>
+          </ul>
+          <!-- 로그인 후 -->
+          <ul class="navbar-nav mb-2 me-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#">로그아웃</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="info.html">마이페이지</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                관리자
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="userinfo.html">회원관리</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- 상단 navbar end -->
+    <!-- 중앙 content start -->
+    <div class="container">
+      <div style="height: 70px"></div>
+      <h2 class="text-center mt-5 mb-3">사용자 정보</h2>
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">Name</div>
+          <div class="col">ID</div>
+          <div class="col">E-Mail</div>
+          <div class="col">Phone-Number</div>
+        </div>
+      </div>
+      <hr>
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">이재혁</div>
+          <div class="col">dlwogur0415</div>
+          <div class="col">leeflection@gmail.com</div>
+          <div class="col">010-0000-0000</div>
+        </div>
+      </div>
+      <hr>
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">김빛누리</div>
+          <div class="col">kbnl123</div>
+          <div class="col">rlaqlcsnfl@gmail.com</div>
+          <div class="col">010-0000-9999</div>
+        </div>
+      </div>
+      <hr>
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">홍길동</div>
+          <div class="col">hgd123</div>
+          <div class="col">hgd123@icloud.com</div>
+          <div class="col">010-9123-2222</div>
+        </div>
+      </div>
+    <!-- 중앙 content end -->
+    <footer
+      class="navbar navbar-expand-lg navbar-light bg-light container justify-content-end fixed-bottom bottom-0"
+    >
+      <div class="row">
+        <ul class="navbar-nav">
+          <li><a href="#" class="nav-link text-secondary">사이트 소개</a></li>
+          <li><a href="#" class="nav-link text-secondary">개인정보처리방침</a></li>
+          <li><a href="#" class="nav-link text-secondary">이용약관</a></li>
+          <li><a href="#" class="nav-link text-secondary">오시는길</a></li>
+          <li><label class="nav-link text-secondary">&copy; SaveHomes Corp.</label></li>
+        </ul>
+      </div>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
