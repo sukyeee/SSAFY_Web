@@ -21,3 +21,6 @@ INSERT INTO code VALUES
   ('001','001','19세 이상 회원','Y'),
   ('001','002','19세 미만 회원','Y');
 
+
+delete from users;
+select* from users;
