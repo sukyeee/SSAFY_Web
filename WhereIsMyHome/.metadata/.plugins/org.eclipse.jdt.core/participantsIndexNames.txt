@@ -1,7 +1,0 @@
-INDEX VERSION 1.131
-D:\SSAFY\SSAFY_Web\WhereIsMyHome\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1235994233.index
-\whereismyhome_4_algo_2\src
-D:\SSAFY\SSAFY_Web\WhereIsMyHome\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2683236489.index
-\whereismyhome_4_algo_2\src
-D:\SSAFY\SSAFY_Web\WhereIsMyHome\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3852364286.index
-\whereismyhome_4_algo_2\src

@@ -1,8 +1,0 @@
-
-10월 15, 2022 21:46:56.02 NEW SESSION
-10월 15, 2022 21:46:56.02 [9084:7388:1015/214656.021:ERROR:device_event_log_impl.cc(214)] [21:46:56.020] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: �ý��ۿ� ������ ��ġ�� �۵����� �ʽ��ϴ�. (0x1F)
-10월 15, 2022 21:46:56.02 [9084:7388:1015/214656.022:ERROR:device_event_log_impl.cc(214)] [21:46:56.022] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: �ý��ۿ� ������ ��ġ�� �۵����� �ʽ��ϴ�. (0x1F)
-10월 15, 2022 21:47:47.32 [9084:7388:1015/214747.319:ERROR:interface_endpoint_client.cc(689)] Message 5 rejected by interface blink.mojom.WidgetHost
-10월 15, 2022 21:47:53.61 [9084:17368:1015/214753.614:ERROR:util.cc(129)] Can't create base directory: C:\Program Files\Google\GoogleUpdater
-10월 15, 2022 22:51:58.77 [libprotobuf ERROR ..\..\third_party\protobuf\src\google\protobuf\message_lite.cc:133] Can't parse message of type "safe_browsing.ClientDownloadRequest" because it is missing required fields: (cannot determine missing fields for lite message)
-10월 15, 2022 22:52:27.06 [libprotobuf ERROR ..\..\third_party\protobuf\src\google\protobuf\message_lite.cc:133] Can't parse message of type "safe_browsing.ClientDownloadRequest" because it is missing required fields: (cannot determine missing fields for lite message)
